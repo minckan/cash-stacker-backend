@@ -1,8 +1,4 @@
-import axios from "axios";
-import NodeCache from "node-cache";
-const { BigQuery } = require("@google-cloud/bigquery");
-
-const bigquery = new BigQuery();
+import { bigquery } from "../../utils/bigquery";
 
 export const getMonthlyAssetTotals = async (workspaceId: string) => {
   const query = `

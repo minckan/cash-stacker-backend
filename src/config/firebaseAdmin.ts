@@ -32,14 +32,7 @@ async function initializeFirebaseAdmin() {
   // const serviceAccountPath = path.resolve(__dirname, secretFilePath);
 
   // 비밀 파일을 읽기
-  console.log(
-    "================================================================"
-  );
   const keyJson = fs.readFileSync(secretFilePath, "utf8");
-  console.log(keyJson);
-  console.log(
-    "================================================================"
-  );
 
   // Firebase Admin SDK 초기화
   admin.initializeApp({

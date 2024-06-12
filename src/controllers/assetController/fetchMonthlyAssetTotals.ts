@@ -1,14 +1,11 @@
 import { Request, Response } from "express";
 
-import { getMonthlyAssetTotals } from "../services/assetService";
+import { getMonthlyAssetTotals } from "../../services/assetService/postMonthlyAssetTotals";
 
-export const fetchBigQueryAssetTransactions = async (
-  req: Request,
-  res: Response
-) => {
+export const fetchMonthlyTotals = async (req: Request, res: Response) => {
   const { workspaceId } = req.body;
 
-  console.log("🍎 workspaceId: ", req.body);
+  console.log("🍎 body: ", req.body);
 
   if (!workspaceId) {
     return res.status(400).send("workspaceId is required");
