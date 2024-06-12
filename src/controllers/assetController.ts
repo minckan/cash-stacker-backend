@@ -8,6 +8,8 @@ export const fetchBigQueryAssetTransactions = async (
 ) => {
   const { workspaceId } = req.body;
 
+  console.log("🍎 workspaceId: ", req.body);
+
   if (!workspaceId) {
     return res.status(400).send("workspaceId is required");
   }

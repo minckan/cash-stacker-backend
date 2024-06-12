@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import admin from "../config/firebaseAdmin";
+import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
 
 export async function authenticateToken(
   req: Request,
@@ -13,12 +14,14 @@ export async function authenticateToken(
     return res.status(401).send("Unauthorized: No token provided");
   }
 
-  console.log(token);
-
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    req.user = decodedToken;
-    next();
+    console.log("decodedToken: ", decodedToken);
+    console.log("decodedToken.uid: ", decodedToken.uid);
+    const user = await admin.auth().getUser(decodedToken.uid);
+    if (user) {
+      next();
+    }
   } catch (error) {
     console.error("Error verifying Firebase ID token:", error);
     res.status(403).send("Forbidden: Invalid token");
