@@ -67,12 +67,13 @@ model AssetType {
 }
 
 model Asset {
-  asset_id      Int      @id @default(autoincrement())
+  asset_id      Int                @id @default(autoincrement())
   workspace_id  Int
   asset_type_id Int
   asset_name    String
   balance       Float
-  created_at    DateTime @default(now())
+  created_at    DateTime           @default(now())
+  transactions  AssetTransaction[]
 
   @@index([workspace_id])
 }
@@ -90,6 +91,8 @@ model AssetTransaction {
   exchange_rate    Float
   shares           Int
   price_per_share  Float
+  Asset            Asset?   @relation(fields: [assetAsset_id], references: [asset_id])
+  assetAsset_id    Int?
 
   @@index([asset_id])
 }

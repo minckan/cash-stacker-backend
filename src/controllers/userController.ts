@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/client";
 
+/// 유저 생성
 export const createUser = async (req: Request, res: Response) => {
   const {
     workspace_id,
