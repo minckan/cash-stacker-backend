@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  user_id         Int      @id @default(autoincrement())
+  workspace_id    Int
+  username        String
+  email           String   @unique
+  created_at      DateTime @default(now())
+  login_type      String
+  role            String
+  joined_at       DateTime
+  push_enable     Boolean
+  darkMode_enable Boolean
+  profile_image   String
+  push_id         String
+
+  @@index([workspace_id])
+}
+
+model Workspace {
+  workspace_id   Int      @id @default(autoincrement())
+  workspace_name String
+  created_at     DateTime @default(now())
+}
+
+model Transaction {
+  transaction_id   Int      @id @default(autoincrement())
+  category_id      Int
+  workspace_id     Int
+  amount           Float
+  transaction_type String
+  description      String
+  transaction_date DateTime
+  created_at       DateTime @default(now())
+
+  @@index([workspace_id])
+}
+
+model TransactionCategory {
+  category_id   Int    @id @default(autoincrement())
+  workspace_id  Int
+  category_name String
+
+  @@index([workspace_id])
+}
+
+model AssetType {
+  asset_type_id   Int     @id @default(autoincrement())
+  workspace_id    Int
+  asset_type_name String
+  is_default      Boolean
+
+  @@index([workspace_id])
+}
+
+model Asset {
+  asset_id      Int      @id @default(autoincrement())
+  workspace_id  Int
+  asset_type_id Int
+  asset_name    String
+  balance       Float
+  created_at    DateTime @default(now())
+
+  @@index([workspace_id])
+}
+
+model AssetTransaction {
+  transaction_id   Int      @id @default(autoincrement())
+  asset_id         Int
+  amount           Float
+  transaction_type String
+  description      String
+  transaction_date DateTime
+  created_at       DateTime @default(now())
+  is_foreign       Boolean
+  currency         String
+  exchange_rate    Float
+  shares           Int
+  price_per_share  Float
+
+  @@index([asset_id])
+}
+
+model Invitation {
+  id           String   @id @default(uuid())
+  workspace_id Int
+  email        String
+  status       String
+  token        String
+  expiry_date  DateTime
+}
+
+model Budget {
+  budget_id    Int      @id @default(autoincrement())
+  workspace_id Int
+  start_date   DateTime
+  end_date     DateTime
+  amount       Float
+  created_at   DateTime @default(now())
+}
