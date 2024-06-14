@@ -13,6 +13,6 @@ router.put("/:id", authenticateToken);
 router.delete("/:id", authenticateToken);
 
 // 워크스페이스에서 발송한 전체 초대 조회
-router.get("/:workspaceId", authenticateToken);
+router.get("/", authenticateToken);
 
 export default router;

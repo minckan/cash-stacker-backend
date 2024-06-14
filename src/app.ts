@@ -10,9 +10,15 @@ import financeTrackerCategoryRoutes from "./routes/financeTrackerCategoryRoutes"
 import budgetRoutes from "./routes/budgetRoutes";
 import invitationRoutes from "./routes/invitationRoutes";
 
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from "./swagger-output.json";
+
 const app = express();
 
 app.use(express.json());
+
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 app.use("/api", exchangeRateRoutes);
 app.use("/api", stockPriceRoutes);
 

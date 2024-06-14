@@ -12,7 +12,7 @@ export const createAsset = async (req: Request, res: Response) => {
       // 새로운 Asset 생성
       const asset = await prisma.asset.create({
         data: {
-          workspace_id: Number(workspace_id),
+          workspace_id: workspace_id,
           asset_type_id,
           asset_name,
           balance,
@@ -53,7 +53,7 @@ export const getAssets = async (req: Request, res: Response) => {
 
   try {
     const allAssets = await prisma.asset.findMany({
-      where: { workspace_id: Number(workspace_id) },
+      where: { workspace_id: workspace_id },
     });
     res.status(201).send(allAssets);
   } catch (error) {
@@ -66,7 +66,7 @@ export const getAssetById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const oneAsset = await prisma.asset.findUnique({
-      where: { workspace_id: Number(id), asset_id: Number(id) },
+      where: { workspace_id: id, asset_id: Number(id) },
     });
     res.status(201).send(oneAsset);
   } catch (error) {
@@ -81,7 +81,7 @@ export const updateAsset = async (req: Request, res: Response) => {
 
   try {
     const updatedAsset = await prisma.asset.update({
-      where: { workspace_id: Number(workspace_id), asset_id: Number(id) },
+      where: { workspace_id: workspace_id, asset_id: Number(id) },
       data: { asset_name },
     });
     res.status(201).send(updatedAsset);
@@ -103,7 +103,7 @@ export const deleteAsset = async (req: Request, res: Response) => {
         where: { asset_id: Number(id) },
       });
       await prisma.asset.delete({
-        where: { workspace_id: Number(workspace_id), asset_id: Number(id) },
+        where: { workspace_id: workspace_id, asset_id: Number(id) },
       });
     });
     res.status(201).send({ result: "deleted successfully" });

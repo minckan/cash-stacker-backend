@@ -6,11 +6,12 @@
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "typeRoots": ["./node_modules/@types", "./types"],
-    "types": ["node", "express"]
+    "types": ["node", "express"],
+    "moduleResolution": "node", // 이 부분을 추가
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*", "types/**/*.d.ts"],
+  "include": ["src/**/*.ts", "types/**/*.d.ts"],
   "exclude": ["node_modules"]
 }
