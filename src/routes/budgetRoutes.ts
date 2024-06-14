@@ -4,9 +4,16 @@ import { authenticateToken } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-// 유저생성
-router.post("/", createUser);
-// 유저상태 수정
+// 활성중인 예산 조회
+router.get("/", authenticateToken);
+
+// 예산 생성
+router.post("/", authenticateToken);
+
+// 예산 수정
 router.put("/:id", authenticateToken);
+
+// 예산 삭제
+router.delete("/:id", authenticateToken);
 
 export default router;

@@ -4,11 +4,15 @@ import {
   getWorkspaces,
   getWorkspaceById,
 } from "../controllers/workspaceController";
+import { authenticateToken } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.post("/", createWorkspace);
-router.get("/", getWorkspaces);
-router.get("/:id", getWorkspaceById);
+// 워크스페이스 생성
+router.post("/", authenticateToken, createWorkspace);
+// 워크스페이스 전체 조회
+router.get("/", authenticateToken, getWorkspaces);
+// 특정 워크스페이스 조회
+router.get("/:id", authenticateToken, getWorkspaceById);
 
 export default router;

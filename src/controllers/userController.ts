@@ -15,6 +15,7 @@ export const createUser = async (req: Request, res: Response) => {
     push_id,
     joined_at,
     created_at,
+    user_id,
   } = req.body;
 
   if (!workspace_id || !username || !email) {
@@ -24,9 +25,10 @@ export const createUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: {
         workspace_id,
+        user_id,
         username,
         email,
         login_type,
@@ -39,8 +41,8 @@ export const createUser = async (req: Request, res: Response) => {
         created_at,
       },
     });
-    res.status(201).send(newUser);
+    res.status(201).send({ user_id });
   } catch (error) {
-    res.status(500).send({ error: "Failed to create user" });
+    res.status(500).send({ message: "Failed to create user", error: error });
   }
 };

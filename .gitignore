@@ -33,3 +33,14 @@ docker-compose.yml
 .github/
 
 key
+
+
+# Database files
+*.sqlite
+*.db
+
+# Prisma files
+prisma/migrations/
+prisma/dev.db
+
+

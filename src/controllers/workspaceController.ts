@@ -21,7 +21,7 @@ export const createWorkspace = async (req: Request, res: Response) => {
     });
     res.status(201).send(newWorkspace);
   } catch (error) {
-    res.status(500).send({ error: "Failed to create user" });
+    res.status(500).send({ message: "Failed to create workspace", error });
   }
 };
 
@@ -40,7 +40,7 @@ export const getWorkspaceById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const oneWorkspace = await prisma.workspace.findUnique({
-      where: { workspace_id: Number(id) },
+      where: { workspace_id: id },
     });
     res.status(201).send(oneWorkspace);
   } catch (error) {

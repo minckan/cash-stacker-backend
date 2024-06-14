@@ -14,14 +14,14 @@ generator client {
 }
 
 model User {
-  user_id         Int      @id @default(autoincrement())
-  workspace_id    Int
+  user_id         String    @id
+  workspace_id    String
   username        String
-  email           String   @unique
-  created_at      DateTime @default(now())
+  email           String    @unique
+  created_at      DateTime? @default(now())
   login_type      String
   role            String
-  joined_at       DateTime
+  joined_at       DateTime?
   push_enable     Boolean
   darkMode_enable Boolean
   profile_image   String
@@ -31,15 +31,15 @@ model User {
 }
 
 model Workspace {
-  workspace_id   Int      @id @default(autoincrement())
+  workspace_id   String    @id
   workspace_name String
-  created_at     DateTime @default(now())
+  created_at     DateTime? @default(now())
 }
 
 model Transaction {
   transaction_id   Int      @id @default(autoincrement())
   category_id      Int
-  workspace_id     Int
+  workspace_id     String
   amount           Float
   transaction_type String
   description      String
@@ -51,7 +51,7 @@ model Transaction {
 
 model TransactionCategory {
   category_id   Int    @id @default(autoincrement())
-  workspace_id  Int
+  workspace_id  String
   category_name String
 
   @@index([workspace_id])
@@ -67,34 +67,40 @@ model AssetType {
 }
 
 model Asset {
-  asset_id      Int                @id @default(autoincrement())
-  workspace_id  Int
+  asset_id      Int                  @id @default(autoincrement())
+  workspace_id  String
   asset_type_id Int
   asset_name    String
-  balance       Float
-  created_at    DateTime           @default(now())
-  transactions  AssetTransaction[]
+  balance       Float?
+  created_at    DateTime             @default(now())
+  transactions  AssetToTransaction[]
 
   @@index([workspace_id])
 }
 
 model AssetTransaction {
-  transaction_id   Int      @id @default(autoincrement())
+  transaction_id   Int                  @id @default(autoincrement())
   asset_id         Int
   amount           Float
   transaction_type String
   description      String
   transaction_date DateTime
-  created_at       DateTime @default(now())
+  created_at       DateTime             @default(now())
   is_foreign       Boolean
   currency         String
   exchange_rate    Float
   shares           Int
   price_per_share  Float
-  Asset            Asset?   @relation(fields: [assetAsset_id], references: [asset_id])
-  assetAsset_id    Int?
+  assets           AssetToTransaction[]
+}
 
-  @@index([asset_id])
+model AssetToTransaction {
+  asset_id       Int
+  transaction_id Int
+  asset          Asset            @relation(fields: [asset_id], references: [asset_id])
+  transaction    AssetTransaction @relation(fields: [transaction_id], references: [transaction_id])
+
+  @@id([asset_id, transaction_id])
 }
 
 model Invitation {
@@ -113,4 +119,5 @@ model Budget {
   end_date     DateTime
   amount       Float
   created_at   DateTime @default(now())
+  isActive     Boolean
 }
