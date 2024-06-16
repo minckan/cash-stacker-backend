@@ -9,6 +9,10 @@ import {
   getAssets,
   updateAsset,
 } from "../controllers/assetController/assetsContoller";
+import {
+  deleteAssetTransaction,
+  updateAssetTransaction,
+} from "../controllers/assetController/assetTransactionContollers";
 
 const router = Router();
 
@@ -23,10 +27,18 @@ router.put("/:id", authenticateToken, updateAsset);
 // 자산삭제
 router.delete("/:id", authenticateToken, deleteAsset);
 // ----------------------------------------------------------------
-// 특정자산의 특정자산 거래내역 수정
-router.put("/:assetId/transactions/:id", authenticateToken);
-// 특정자산의 특정자산 거래내역 삭제
-router.delete("/:assetId/transactions/:id", authenticateToken);
+// 특정자산의 거래내역 수정
+router.put(
+  "/:assetId/transactions/:id",
+  authenticateToken,
+  updateAssetTransaction
+);
+// 특정자산의 거래내역 삭제
+router.delete(
+  "/:assetId/transactions/:id",
+  authenticateToken,
+  deleteAssetTransaction
+);
 // ----------------------------------------------------------------
 // 월간 자산 추이 조회
 router.post("/monthlyTrend", authenticateToken, fetchMonthlyTotals);

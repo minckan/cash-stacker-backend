@@ -46,22 +46,27 @@ model Transaction {
   transaction_date DateTime
   created_at       DateTime @default(now())
 
-  @@index([workspace_id])
+  // 외래 키 관계 정의
+  category TransactionCategory @relation(fields: [category_id], references: [category_id])
+
+  @@index([workspace_id, category_id])
 }
 
 model TransactionCategory {
-  category_id   Int    @id @default(autoincrement())
+  category_id   Int           @id @default(autoincrement())
   workspace_id  String
   category_name String
+  category_type String // 'income' or 'expense'
+  Transaction   Transaction[]
 
   @@index([workspace_id])
 }
 
 model AssetType {
-  asset_type_id   Int     @id @default(autoincrement())
-  workspace_id    Int
+  asset_type_id   Int      @id @default(autoincrement())
+  workspace_id    String
   asset_type_name String
-  is_default      Boolean
+  is_default      Boolean? @default(false)
 
   @@index([workspace_id])
 }
@@ -105,7 +110,7 @@ model AssetToTransaction {
 
 model Invitation {
   id           String   @id @default(uuid())
-  workspace_id Int
+  workspace_id String
   email        String
   status       String
   token        String
@@ -114,7 +119,7 @@ model Invitation {
 
 model Budget {
   budget_id    Int      @id @default(autoincrement())
-  workspace_id Int
+  workspace_id String
   start_date   DateTime
   end_date     DateTime
   amount       Float

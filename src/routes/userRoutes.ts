@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser } from "../controllers/userController";
+import { createUser, updateUserStatus } from "../controllers/userController";
 import { authenticateToken } from "../middleware/authMiddleware";
 
 const router = express.Router();
@@ -7,6 +7,6 @@ const router = express.Router();
 // 유저생성
 router.post("/", createUser);
 // 유저상태 수정
-router.put("/:id", authenticateToken);
+router.put("/:id", authenticateToken, updateUserStatus);
 
 export default router;

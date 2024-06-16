@@ -7,6 +7,15 @@ const doc = {
   },
   host: "localhost:8080",
   schemes: ["http"],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+      },
+    },
+  },
+  security: [{ bearerAuth: "" }],
 };
 
 const outputFile = "./src/swagger-output.json";

@@ -46,3 +46,26 @@ export const createUser = async (req: Request, res: Response) => {
     res.status(500).send({ message: "Failed to create user", error: error });
   }
 };
+
+// 유저 상태 수정
+export const updateUserStatus = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { id } = req.params;
+  const { push_enable, darkMode_enable, role } = req.body;
+
+  try {
+    const user = await prisma.user.update({
+      where: { user_id: id },
+      data: {
+        push_enable: Boolean(push_enable),
+        darkMode_enable: Boolean(darkMode_enable),
+        role: role,
+      },
+    });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update user status" });
+  }
+};

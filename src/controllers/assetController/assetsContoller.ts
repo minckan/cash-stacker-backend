@@ -33,7 +33,7 @@ export const createAsset = async (req: Request, res: Response) => {
           await prisma.assetToTransaction.create({
             data: {
               asset_id: asset.asset_id,
-              transaction_id: transaction.transaction_id, // 실제로는 transaction의 id가 필요합니다.
+              transaction_id: transaction.transaction_id,
             },
           });
         }
