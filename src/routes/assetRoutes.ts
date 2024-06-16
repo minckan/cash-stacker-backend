@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { fetchMonthlyTotals } from "../controllers/assetController/fetchMonthlyAssetTotals";
+import { getMonthlyAssetTotals } from "../controllers/assetController/monthlyAssetTotalsController";
 import { authenticateToken } from "../middleware/authMiddleware";
 import {
   createAsset,
@@ -41,6 +41,6 @@ router.delete(
 );
 // ----------------------------------------------------------------
 // 월간 자산 추이 조회
-router.post("/monthlyTrend", authenticateToken, fetchMonthlyTotals);
+router.get("/monthlyTrend", authenticateToken, getMonthlyAssetTotals);
 
 export default router;

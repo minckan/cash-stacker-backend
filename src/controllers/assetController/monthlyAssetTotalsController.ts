@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
-import { getMonthlyAssetTotals } from "../../services/assetService/postMonthlyAssetTotals";
+import { getMonthlyAssetTotalsValue } from "../../services/assetService/getMonthlyAssetTotalsValue";
 
-export const fetchMonthlyTotals = async (req: Request, res: Response) => {
+export const getMonthlyAssetTotals = async (req: Request, res: Response) => {
   const { workspaceId } = req.body;
 
   console.log("🍎 body: ", req.body);
@@ -12,7 +12,7 @@ export const fetchMonthlyTotals = async (req: Request, res: Response) => {
   }
 
   try {
-    const data = await getMonthlyAssetTotals(workspaceId);
+    const data = await getMonthlyAssetTotalsValue(workspaceId);
     res.json(data);
   } catch (error) {
     if (error instanceof Error) {

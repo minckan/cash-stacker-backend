@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
+import { Prisma } from "@prisma/client";
 
 /// 자산 생성
 export const createAsset = async (req: Request, res: Response) => {
@@ -8,39 +9,41 @@ export const createAsset = async (req: Request, res: Response) => {
 
   try {
     // 트랜잭션 시작
-    const result = await prisma.$transaction(async (prisma) => {
-      // 새로운 Asset 생성
-      const asset = await prisma.asset.create({
-        data: {
-          workspace_id: workspace_id,
-          asset_type_id,
-          asset_name,
-          balance,
-        },
-      });
+    const result = await prisma.$transaction(
+      async (prisma: Prisma.TransactionClient) => {
+        // 새로운 Asset 생성
+        const asset = await prisma.asset.create({
+          data: {
+            workspace_id: workspace_id,
+            asset_type_id,
+            asset_name,
+            balance,
+          },
+        });
 
-      // 자산과 연결된 거래내역 생성
-      if (transactions && transactions.length > 0) {
-        for (const transaction of transactions) {
-          await prisma.assetTransaction.create({
-            data: {
-              ...transaction,
-              asset_id: asset.asset_id,
-            },
-          });
+        // 자산과 연결된 거래내역 생성
+        if (transactions && transactions.length > 0) {
+          for (const transaction of transactions) {
+            await prisma.assetTransaction.create({
+              data: {
+                ...transaction,
+                asset_id: asset.asset_id,
+              },
+            });
 
-          // 중간 테이블에 데이터 추가
-          await prisma.assetToTransaction.create({
-            data: {
-              asset_id: asset.asset_id,
-              transaction_id: transaction.transaction_id,
-            },
-          });
+            // 중간 테이블에 데이터 추가
+            await prisma.assetToTransaction.create({
+              data: {
+                asset_id: asset.asset_id,
+                transaction_id: transaction.transaction_id,
+              },
+            });
+          }
         }
-      }
 
-      return asset;
-    });
+        return asset;
+      }
+    );
     res.status(201).send(result);
   } catch (error) {
     res.status(500).send({ error: "Failed to create user" });
@@ -95,7 +98,7 @@ export const deleteAsset = async (req: Request, res: Response) => {
   const { workspace_id, id } = req.params;
 
   try {
-    await prisma.$transaction(async (prisma) => {
+    await prisma.$transaction(async (prisma: Prisma.TransactionClient) => {
       await prisma.assetToTransaction.deleteMany({
         where: { asset_id: Number(id) },
       });

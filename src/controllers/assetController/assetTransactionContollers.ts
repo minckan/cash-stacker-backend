@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 /// 특정 자산 거래내역 수정
 export const updateAssetTransaction = async (req: Request, res: Response) => {
@@ -38,7 +39,7 @@ export const deleteAssetTransaction = async (req: Request, res: Response) => {
   const { assetId, id } = req.params;
 
   try {
-    await prisma.$transaction(async (prisma) => {
+    await prisma.$transaction(async (prisma: Prisma.TransactionClient) => {
       await prisma.assetToTransaction.deleteMany({
         where: { transaction_id: Number(id) },
       });
