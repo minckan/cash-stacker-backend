@@ -4,6 +4,8 @@ import { authenticateToken } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
+// 유저 조회
+router.get("/:id");
 // 유저생성
 router.post("/", createUser);
 // 유저상태 수정

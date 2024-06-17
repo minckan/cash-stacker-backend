@@ -1,6 +1,27 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/client";
 
+/// 유저 조회
+export const getUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).send({ error: "유저 아이디는 필수입니다." });
+  }
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: { user_id: id },
+    });
+
+    res.status(200).send(user);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: "유효하지 않은 아이디 입니다.", error: error });
+  }
+};
+
 /// 유저 생성
 export const createUser = async (req: Request, res: Response) => {
   const {
@@ -16,12 +37,13 @@ export const createUser = async (req: Request, res: Response) => {
     joined_at,
     created_at,
     user_id,
+    platform_type,
   } = req.body;
 
   if (!workspace_id || !username || !email) {
     return res
       .status(400)
-      .send({ error: "workspace_id, username, and email are required" });
+      .send({ error: "workspace_id, username, and email 는 필수입니다" });
   }
 
   try {
@@ -39,11 +61,12 @@ export const createUser = async (req: Request, res: Response) => {
         push_id,
         joined_at,
         created_at,
+        platform_type,
       },
     });
     res.status(201).send({ user_id });
   } catch (error) {
-    res.status(500).send({ message: "Failed to create user", error: error });
+    res.status(500).send({ message: "유저 생성 실패", error: error });
   }
 };
 
@@ -66,6 +89,8 @@ export const updateUserStatus = async (
     });
     res.json(user);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update user status" });
+    res
+      .status(500)
+      .json({ message: "Failed to update user status", error: error });
   }
 };

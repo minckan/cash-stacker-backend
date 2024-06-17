@@ -5,7 +5,8 @@ import { Prisma } from "@prisma/client";
 /// 자산 생성
 export const createAsset = async (req: Request, res: Response) => {
   const { workspace_id } = req.params;
-  const { asset_type_id, asset_name, balance, transactions } = req.body;
+  const { asset_type_id, asset_name, balance, transactions, currency_code } =
+    req.body;
 
   try {
     // 트랜잭션 시작
@@ -18,6 +19,7 @@ export const createAsset = async (req: Request, res: Response) => {
             asset_type_id,
             asset_name,
             balance,
+            currency_code,
           },
         });
 

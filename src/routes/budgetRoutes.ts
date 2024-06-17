@@ -11,15 +11,15 @@ import {
 const router = express.Router();
 
 // 활성중인 예산 조회
-router.get("/:workspaceId", authenticateToken, getAllBudgets);
+router.get("/", authenticateToken, getAllBudgets);
 
 // 예산 생성
-router.post("/:workspaceId", authenticateToken, createBudget);
+router.post("/", authenticateToken, createBudget);
 
 // 예산 수정
-router.put("/:workspaceId/:id", authenticateToken, updateBudget);
+router.put("/:id", authenticateToken, updateBudget);
 
 // 예산 삭제
-router.delete("/:workspaceId/:id", authenticateToken, deleteBudget);
+router.delete("/:id", authenticateToken, deleteBudget);
 
 export default router;

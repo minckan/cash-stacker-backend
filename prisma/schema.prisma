@@ -26,6 +26,7 @@ model User {
   darkMode_enable Boolean
   profile_image   String
   push_id         String
+  platform_type   String
 
   @@index([workspace_id])
 }
@@ -42,6 +43,7 @@ model Transaction {
   workspace_id     String
   amount           Float
   transaction_type String
+  payment_method   String
   description      String
   transaction_date DateTime
   created_at       DateTime @default(now())
@@ -78,6 +80,7 @@ model Asset {
   asset_name    String
   balance       Float?
   created_at    DateTime             @default(now())
+  currency_code String
   transactions  AssetToTransaction[]
 
   @@index([workspace_id])
@@ -85,17 +88,16 @@ model Asset {
 
 model AssetTransaction {
   transaction_id   Int                  @id @default(autoincrement())
+  created_at       DateTime             @default(now())
   asset_id         Int
-  amount           Float
   transaction_type String
   description      String
   transaction_date DateTime
-  created_at       DateTime             @default(now())
-  is_foreign       Boolean
   currency         String
-  exchange_rate    Float
-  shares           Int
-  price_per_share  Float
+  amount           Float?
+  exchange_rate    Float?
+  shares           Int?
+  price_per_share  Float?
   assets           AssetToTransaction[]
 }
 

@@ -10,15 +10,15 @@ import {
 const router = Router();
 
 // 가계부 카테고리 타입별 전체조회
-router.get("/:workspaceId/:type", authenticateToken, getCategoriesByType);
+router.get("/:type", authenticateToken, getCategoriesByType);
 
 // 가계부 카테고리 생성
-router.post("/:workspaceId", authenticateToken, createCategory);
+router.post("/", authenticateToken, createCategory);
 
 // 가계부 카테고리 수정
-router.put("/:workspaceId/:id", authenticateToken, updateCategory);
+router.put("/:id", authenticateToken, updateCategory);
 
 // 가계부 카테고리 삭제
-router.delete("/:workspaceId/:id", authenticateToken, deleteCategory);
+router.delete("/:id", authenticateToken, deleteCategory);
 
 export default router;

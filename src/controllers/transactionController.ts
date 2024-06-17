@@ -13,6 +13,7 @@ export const createTransaction = async (
     transaction_type,
     description,
     transaction_date,
+    payment_method,
   } = req.body;
   try {
     const transaction = await prisma.transaction.create({
@@ -23,6 +24,7 @@ export const createTransaction = async (
         transaction_type,
         description,
         transaction_date: new Date(transaction_date),
+        payment_method,
       },
     });
     res.status(201).json(transaction);
