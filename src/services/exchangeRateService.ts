@@ -19,9 +19,15 @@ const fetchExchangeRateFromApi = async (date: string) => {
     data: "AP01",
     searchdate: date,
   };
+
+  console.log(
+    `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`
+  );
   const response = await axios.get(
     `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`
   );
+
+  console.log("response: ", response);
   return response.data;
 };
 
@@ -43,6 +49,7 @@ export const getExchangeRate = async () => {
 
   try {
     const data = await fetchExchangeRateFromApi(formattedDate);
+    console.log("data: ", data);
 
     apiCache.set(cacheKey, data);
     return data;

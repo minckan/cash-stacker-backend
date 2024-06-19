@@ -5,7 +5,7 @@ const doc = {
     title: "Cash Stacker",
     description: "",
   },
-  host: "localhost:8080",
+  host: process.env.BASE_URL,
   schemes: ["http"],
   components: {
     securitySchemes: {

@@ -14,7 +14,11 @@ export const getUser = async (req: Request, res: Response) => {
       where: { user_id: id },
     });
 
-    res.status(200).send(user);
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.status(200).send(null);
+    }
   } catch (error) {
     res
       .status(500)

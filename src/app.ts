@@ -13,11 +13,32 @@ import invitationRoutes from "./routes/invitationRoutes";
 import swaggerUi from "swagger-ui-express";
 import swaggerFile from "./swagger-output.json";
 
+import winston from "winston";
+import expressWinston from "express-winston";
+
 const app = express();
 
 app.use(express.json());
 
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
+// 요청과 응답을 로그로 남기는 미들웨어 설정
+app.use(
+  expressWinston.logger({
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: "request.log" }),
+    ],
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.json()
+    ),
+    meta: true,
+    msg: "HTTP {{req.method}} {{req.url}}",
+    expressFormat: true,
+    colorize: false,
+  })
+);
 
 app.use("/api", exchangeRateRoutes);
 app.use("/api", stockPriceRoutes);
