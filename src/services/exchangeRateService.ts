@@ -13,6 +13,11 @@ dotenv.config();
 const apiCache = new NodeCache({ stdTTL: 3600 });
 const exchangeRateApiUrl = process.env.EXCHANGE_RATE_API_URL || "";
 
+const https = require("https");
+const agent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 const fetchExchangeRateFromApi = async (date: string) => {
   const params = {
     authkey: process.env.EXCHANGE_RATE_API_KEY ?? "",
@@ -20,15 +25,18 @@ const fetchExchangeRateFromApi = async (date: string) => {
     searchdate: date,
   };
 
-  console.log(
-    `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`
-  );
-  const response = await axios.get(
-    `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`
-  );
+  try {
+    const response = await axios.get(
+      `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`,
+      { httpsAgent: agent, maxRedirects: 1 }
+    );
 
-  console.log("response: ", response);
-  return response.data;
+    return response.data;
+  } catch (error) {
+    console.log(error);
+
+    throw new Error(error);
+  }
 };
 
 export const getExchangeRate = async () => {
@@ -49,7 +57,6 @@ export const getExchangeRate = async () => {
 
   try {
     const data = await fetchExchangeRateFromApi(formattedDate);
-    console.log("data: ", data);
 
     apiCache.set(cacheKey, data);
     return data;
