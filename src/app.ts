@@ -37,6 +37,12 @@ app.use(
     msg: "HTTP {{req.method}} {{req.url}}",
     expressFormat: true,
     colorize: false,
+    requestWhitelist: [...expressWinston.requestWhitelist, "body"],
+    responseWhitelist: [...expressWinston.responseWhitelist, "body"],
+    ignoreRoute: function (req, res) {
+      // 무시할 경로를 설정할 수 있습니다.
+      return false;
+    },
   })
 );
 

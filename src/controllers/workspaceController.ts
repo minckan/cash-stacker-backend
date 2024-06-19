@@ -6,17 +6,14 @@ export const createWorkspace = async (req: Request, res: Response) => {
   const { workspace_name, workspace_id, created_at } = req.body;
 
   if (!workspace_id) {
-    return res
-      .status(400)
-      .send({ error: "workspace_id, username, and email are required" });
+    return res.status(400).send({ error: "workspace_id are required" });
   }
 
   try {
     const newWorkspace = await prisma.workspace.create({
       data: {
-        workspace_name,
+        workspace_name: "",
         workspace_id,
-        created_at,
       },
     });
     res.status(201).send(newWorkspace);
