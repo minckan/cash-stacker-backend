@@ -1,0 +1,88 @@
+get:
+  tags:
+    - asset
+  summary: Get an asset by ID
+  description: Retrieve a specific asset by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset
+  responses:
+    200:
+      description: An asset object.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Asset"
+    500:
+      description: Failed to retrieve asset.
+
+put:
+  tags:
+    - asset
+  summary: Update an asset name
+  description: Update the name of a specific asset by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            asset_name:
+              type: string
+  responses:
+    201:
+      description: Asset updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Asset"
+    500:
+      description: Failed to update asset.
+
+delete:
+  tags:
+    - asset
+  summary: Delete an asset by ID
+  description: Delete a specific asset by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset
+  responses:
+    201:
+      description: Asset deleted successfully.
+    500:
+      description: Failed to delete asset.

@@ -6,6 +6,7 @@ export const createTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial tracker"]
   const { workspaceId } = req.params;
   const {
     category_id,
@@ -38,6 +39,7 @@ export const updateTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial tracker"]
   const { id } = req.params;
   const {
     category_id,
@@ -68,6 +70,7 @@ export const deleteTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial tracker"]
   const { id } = req.params;
   try {
     await prisma.transaction.delete({
@@ -84,6 +87,7 @@ export const getMonthlyTransactions = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial tracker"]
   const { workspaceId, monthKey } = req.params;
   try {
     const startDate = new Date(monthKey);
@@ -113,6 +117,7 @@ export const getDailyTransactions = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial tracker"]
   const { workspaceId, dateKey } = req.params;
   try {
     const date = new Date(dateKey);

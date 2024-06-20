@@ -1,0 +1,30 @@
+get:
+  tags:
+    - asset
+  summary: Get monthly asset trend
+  description: Retrieve the monthly trend of assets for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  responses:
+    200:
+      description: A list of asset trends.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                month:
+                  type: string
+                  format: date
+                total_balance:
+                  type: number
+                  format: float
+    500:
+      description: Failed to retrieve monthly asset trend.

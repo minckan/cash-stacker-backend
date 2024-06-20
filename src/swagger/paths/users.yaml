@@ -1,0 +1,68 @@
+post:
+  tags:
+    - user
+  summary: Create a new user
+  description: Create a new user with the provided information.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            workspace_id:
+              type: string
+              description: The ID of the workspace.
+            username:
+              type: string
+              description: The username of the user.
+            email:
+              type: string
+              description: The email of the user.
+            login_type:
+              type: string
+              description: The login type of the user.
+            role:
+              type: string
+              description: The role of the user.
+            push_enable:
+              type: boolean
+              description: Whether push notifications are enabled.
+            darkMode_enable:
+              type: boolean
+              description: Whether dark mode is enabled.
+            profile_image:
+              type: string
+              description: The profile image of the user.
+            push_id:
+              type: string
+              description: The push ID of the user.
+            joined_at:
+              type: string
+              format: date-time
+              description: The date the user joined.
+            created_at:
+              type: string
+              format: date-time
+              description: The date the user was created.
+            user_id:
+              type: string
+              description: The ID of the user.
+            platform_type:
+              type: string
+              description: The platform type of the user.
+  responses:
+    201:
+      description: User created successfully.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: string
+                description: The ID of the newly created user.
+    400:
+      description: Required fields are missing.
+    500:
+      description: Failed to create user.

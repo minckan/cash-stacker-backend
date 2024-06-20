@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { getMonthlyAssetTotalsValue } from "../../services/assetService/getMonthlyAssetTotalsValue";
 
 export const getMonthlyAssetTotals = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { workspaceId } = req.body;
 
   console.log("🍎 body: ", req.body);

@@ -6,6 +6,7 @@ export const createInvitation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["invitation"]
   const { workspaceId } = req.params;
   const { email, status, token, expiry_date } = req.body;
   try {
@@ -29,6 +30,7 @@ export const updateInvitation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["invitation"]
   const { id } = req.params;
   const { status } = req.body;
   try {
@@ -49,6 +51,7 @@ export const deleteInvitation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["invitation"]
   const { id } = req.params;
   try {
     await prisma.invitation.delete({
@@ -65,6 +68,7 @@ export const getAllInvitations = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["invitation"]
   const { workspaceId } = req.params;
   try {
     const invitations = await prisma.invitation.findMany({

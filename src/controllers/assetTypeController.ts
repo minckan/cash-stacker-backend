@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import prisma from "../prisma/client";
 // 자산 타입 전체 조회
 export const getAllAssetTypes = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset type"]
   const { workspace_id } = req.params;
   try {
     const assetTypes = await prisma.assetType.findMany({
@@ -17,6 +18,7 @@ export const getAllAssetTypes = async (req: Request, res: Response) => {
 
 // 자산 타입 생성
 export const createAssetType = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset type"]
   const { workspace_id } = req.params;
   const { asset_type_name } = req.body;
   try {
@@ -34,6 +36,7 @@ export const createAssetType = async (req: Request, res: Response) => {
 
 // 자산 타입 수정
 export const updateAssetType = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset type"]
   const { workspace_id, id } = req.params;
   const { asset_type_name } = req.body;
   try {
@@ -51,6 +54,7 @@ export const updateAssetType = async (req: Request, res: Response) => {
 
 // 자산 타입 삭제
 export const deleteAssetType = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset type"]
   const { id, workspace_id } = req.params;
   try {
     await prisma.assetType.delete({

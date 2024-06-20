@@ -4,6 +4,7 @@ import { Prisma } from "@prisma/client";
 
 /// 자산 생성
 export const createAsset = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { workspace_id } = req.params;
   const { asset_type_id, asset_name, balance, transactions, currency_code } =
     req.body;
@@ -54,6 +55,7 @@ export const createAsset = async (req: Request, res: Response) => {
 
 /// 자산 전체 조회
 export const getAssets = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { workspace_id } = req.params;
 
   try {
@@ -68,6 +70,7 @@ export const getAssets = async (req: Request, res: Response) => {
 
 /// 단일 자산 조회
 export const getAssetById = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { id } = req.params;
   try {
     const oneAsset = await prisma.asset.findUnique({
@@ -81,6 +84,7 @@ export const getAssetById = async (req: Request, res: Response) => {
 
 /// 자산 이름 업데이트
 export const updateAsset = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { workspace_id, id } = req.params;
   const { asset_name } = req.body;
 
@@ -97,6 +101,7 @@ export const updateAsset = async (req: Request, res: Response) => {
 
 /// 자산 삭제
 export const deleteAsset = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { workspace_id, id } = req.params;
 
   try {

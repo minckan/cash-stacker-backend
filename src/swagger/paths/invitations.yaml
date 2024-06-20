@@ -1,0 +1,65 @@
+get:
+  tags:
+    - invitation
+  summary: Get all invitations
+  description: Retrieve all invitations sent from the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  responses:
+    200:
+      description: A list of invitations.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Invitation"
+    500:
+      description: Failed to fetch invitations.
+
+post:
+  tags:
+    - invitation
+  summary: Create a new invitation
+  description: Create a new invitation for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              description: The email address to send the invitation to
+            status:
+              type: string
+              description: The status of the invitation
+            token:
+              type: string
+              description: The invitation token
+            expiry_date:
+              type: string
+              format: date-time
+              description: The expiry date of the invitation
+  responses:
+    201:
+      description: Invitation created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Invitation"
+    500:
+      description: Failed to create invitation.

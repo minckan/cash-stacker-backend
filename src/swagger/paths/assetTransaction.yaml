@@ -1,0 +1,33 @@
+get:
+  tags:
+    - asset
+  summary: Get an asset transaction by ID
+  description: Retrieve a specific asset transaction by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: assetId
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset transaction
+  responses:
+    200:
+      description: An asset transaction object.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AssetTransaction"
+    500:
+      description: Failed to retrieve asset transaction.

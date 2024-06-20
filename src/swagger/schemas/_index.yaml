@@ -1,0 +1,199 @@
+User:
+  type: object
+  properties:
+    user_id:
+      type: string
+    workspace_id:
+      type: string
+    username:
+      type: string
+    email:
+      type: string
+      format: email
+    created_at:
+      type: string
+      format: date-time
+    login_type:
+      type: string
+    role:
+      type: string
+    joined_at:
+      type: string
+      format: date-time
+    push_enable:
+      type: boolean
+    darkMode_enable:
+      type: boolean
+    profile_image:
+      type: string
+    push_id:
+      type: string
+    platform_type:
+      type: string
+
+Workspace:
+  type: object
+  properties:
+    workspace_id:
+      type: string
+    workspace_name:
+      type: string
+    created_at:
+      type: string
+      format: date-time
+
+Transaction:
+  type: object
+  properties:
+    transaction_id:
+      type: integer
+    category_id:
+      type: integer
+    workspace_id:
+      type: string
+    amount:
+      type: number
+      format: float
+    transaction_type:
+      type: string
+    payment_method:
+      type: string
+    description:
+      type: string
+    transaction_date:
+      type: string
+      format: date-time
+    created_at:
+      type: string
+      format: date-time
+
+TransactionCategory:
+  type: object
+  properties:
+    category_id:
+      type: integer
+    workspace_id:
+      type: string
+    category_name:
+      type: string
+    category_type:
+      type: string
+
+AssetType:
+  type: object
+  properties:
+    asset_type_id:
+      type: integer
+    workspace_id:
+      type: string
+    asset_type_name:
+      type: string
+    is_default:
+      type: boolean
+
+Asset:
+  type: object
+  properties:
+    asset_id:
+      type: integer
+    workspace_id:
+      type: string
+    asset_type_id:
+      type: integer
+    asset_name:
+      type: string
+    balance:
+      type: number
+      format: float
+    created_at:
+      type: string
+      format: date-time
+    currency_code:
+      type: string
+    transactions:
+      type: array
+      items:
+        $ref: "../openapi.yaml#/components/schemas/AssetToTransaction"
+
+AssetTransaction:
+  type: object
+  properties:
+    transaction_id:
+      type: integer
+    created_at:
+      type: string
+      format: date-time
+    asset_id:
+      type: integer
+    transaction_type:
+      type: string
+    description:
+      type: string
+    transaction_date:
+      type: string
+      format: date-time
+    currency:
+      type: string
+    amount:
+      type: number
+      format: float
+    exchange_rate:
+      type: number
+      format: float
+    shares:
+      type: integer
+    price_per_share:
+      type: number
+      format: float
+    assets:
+      type: array
+      items:
+        $ref: "../openapi.yaml#/components/schemas/AssetToTransaction"
+
+AssetToTransaction:
+  type: object
+  properties:
+    asset_id:
+      type: integer
+    transaction_id:
+      type: integer
+
+Invitation:
+  type: object
+  properties:
+    id:
+      type: string
+    workspace_id:
+      type: string
+    email:
+      type: string
+      format: email
+    status:
+      type: string
+    token:
+      type: string
+    expiry_date:
+      type: string
+      format: date-time
+
+Budget:
+  type: object
+  properties:
+    budget_id:
+      type: integer
+    workspace_id:
+      type: string
+    start_date:
+      type: string
+      format: date-time
+    end_date:
+      type: string
+      format: date-time
+    amount:
+      type: number
+      format: float
+    created_at:
+      type: string
+      format: date-time
+    isActive:
+      type: boolean

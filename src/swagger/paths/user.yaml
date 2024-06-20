@@ -1,0 +1,57 @@
+get:
+  tags:
+    - user
+  summary: Retrieve a user by ID
+  description: Retrieve a user by their user ID.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The user ID.
+  responses:
+    200:
+      description: A user object.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/User"
+    400:
+      description: User ID is required.
+    500:
+      description: Invalid user ID.
+
+put:
+  tags:
+    - user
+  summary: Update user status
+  description: Update the status of a user by their user ID.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The user ID.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            push_enable:
+              type: boolean
+              description: Whether push notifications are enabled.
+            darkMode_enable:
+              type: boolean
+              description: Whether dark mode is enabled.
+            role:
+              type: string
+              description: The role of the user.
+  responses:
+    201:
+      description: User status updated successfully.
+    500:
+      description: Failed to update user status.

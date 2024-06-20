@@ -1,0 +1,42 @@
+post:
+  tags:
+    - financial tracker
+  summary: Create a new transaction
+  description: Create a new financial transaction for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            category_id:
+              type: integer
+            amount:
+              type: number
+              format: float
+            transaction_type:
+              type: string
+            description:
+              type: string
+            transaction_date:
+              type: string
+              format: date-time
+            payment_method:
+              type: string
+  responses:
+    201:
+      description: Transaction created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Transaction"
+    500:
+      description: Failed to create transaction.

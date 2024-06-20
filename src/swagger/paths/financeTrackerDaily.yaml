@@ -1,0 +1,29 @@
+get:
+  tags:
+    - financial tracker
+  summary: Get daily transactions
+  description: Retrieve all financial transactions for the specified date.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: dateKey
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The date key in YYYY-MM-DD format
+  responses:
+    200:
+      description: A list of transactions.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Transaction"
+    500:
+      description: Failed to fetch daily transactions.

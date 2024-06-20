@@ -74,7 +74,7 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// 유저 상태 수정
+/// 유저 상태 수정
 export const updateUserStatus = async (
   req: Request,
   res: Response
@@ -91,7 +91,7 @@ export const updateUserStatus = async (
         role: role,
       },
     });
-    res.json(user);
+    res.status(201).send({ user_id: id });
   } catch (error) {
     res
       .status(500)

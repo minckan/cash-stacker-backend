@@ -1,0 +1,61 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Cash Stacker API
+  description: Cash Stacker의 API 문서입니다
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:8080/
+paths:
+  /users:
+    $ref: "./paths/users.yaml"
+  /users/{id}:
+    $ref: "./paths/user.yaml"
+  /workspaces:
+    $ref: "./paths/workspaces.yaml"
+  /workspaces/{id}:
+    $ref: "./paths/workspace.yaml"
+  /{workspaceId}/assets:
+    $ref: "./paths/assets.yaml"
+  /{workspaceId}/assets/{id}:
+    $ref: "./paths/asset.yaml"
+  /{workspaceId}/assets/{assetId}/transactions/{id}:
+    $ref: "./paths/assetTransaction.yaml"
+  /{workspaceId}/assets/monthlyTrend:
+    $ref: "./paths/monthlyTrend.yaml"
+  /{workspaceId}/finance:
+    $ref: "./paths/financeTrackers.yaml"
+  /{workspaceId}/finance/{id}:
+    $ref: "./paths/financeTracker.yaml"
+  /{workspaceId}/finance/monthly/{monthKey}:
+    $ref: "./paths/financeTrackerMonthly.yaml"
+  /{workspaceId}/finance/daily/{dateKey}:
+    $ref: "./paths/financeTrackerDaily.yaml"
+  /{workspaceId}/asset/type:
+    $ref: "./paths/assetTypes.yaml"
+  /{workspaceId}/asset/type/{id}:
+    $ref: "./paths/assetType.yaml"
+  /{workspaceId}/finance/category:
+    $ref: "./paths/transactionCategories.yaml"
+  /{workspaceId}/finance/category/{id}:
+    $ref: "./paths/transactionCategory.yaml"
+  /{workspaceId}/finance/category/{type}:
+    $ref: "./paths/transactionCategoriesByType.yaml"
+  /{workspaceId}/budget:
+    $ref: "./paths/budgets.yaml"
+  /{workspaceId}/budget/{id}:
+    $ref: "./paths/budget.yaml"
+  /{workspaceId}/invitation:
+    $ref: "./paths/invitations.yaml"
+  /{workspaceId}/invitation/{id}:
+    $ref: "./paths/invitation.yaml"
+  /api/exchange-rates:
+    $ref: "./paths/exchangeRate.yaml"
+components:
+  parameters:
+    $ref: "./parameters/_index.yaml"
+  schemas:
+    $ref: "./schemas/_index.yaml"
+  responses:
+    $ref: "./responses/_index.yaml"

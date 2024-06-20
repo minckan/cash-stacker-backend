@@ -9,18 +9,19 @@ import assetTypesRoutes from "./routes/assetTypeRoutes";
 import financeTrackerCategoryRoutes from "./routes/financeTrackerCategoryRoutes";
 import budgetRoutes from "./routes/budgetRoutes";
 import invitationRoutes from "./routes/invitationRoutes";
-
-import swaggerUi from "swagger-ui-express";
-import swaggerFile from "./swagger-output.json";
-
 import winston from "winston";
 import expressWinston from "express-winston";
+import swaggerUi from "swagger-ui-express";
+import YAML from "yamljs";
+import path from "path";
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+const swaggerSpec = YAML.load(path.join(__dirname, "../build/swagger.yaml"));
+
+app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // 요청과 응답을 로그로 남기는 미들웨어 설정
 app.use(

@@ -1,0 +1,61 @@
+put:
+  tags:
+    - asset type
+  summary: Update an asset type
+  description: Update an existing asset type by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset type
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            asset_type_name:
+              type: string
+              description: The name of the asset type
+  responses:
+    200:
+      description: Asset type updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AssetType"
+    500:
+      description: Failed to update asset type.
+
+delete:
+  tags:
+    - asset type
+  summary: Delete an asset type
+  description: Delete an existing asset type by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset type
+  responses:
+    204:
+      description: Asset type deleted successfully.
+    500:
+      description: Failed to delete asset type.

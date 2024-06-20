@@ -1,0 +1,47 @@
+userId:
+  name: id
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The user ID
+
+workspaceId:
+  name: workspaceId
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The workspace ID
+
+assetId:
+  name: assetId
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The asset ID
+
+transactionId:
+  name: transactionId
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The transaction ID
+
+monthKey:
+  name: monthKey
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The month key in YYYY-MM format
+
+dateKey:
+  name: dateKey
+  in: path
+  required: true
+  schema:
+    type: string
+  description: The date key in YYYY-MM-DD format

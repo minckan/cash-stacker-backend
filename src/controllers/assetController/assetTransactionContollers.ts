@@ -4,6 +4,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 /// 특정 자산 거래내역 수정
 export const updateAssetTransaction = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { workspace_id, id, assetId } = req.params;
   const {
     amount,
@@ -36,6 +37,7 @@ export const updateAssetTransaction = async (req: Request, res: Response) => {
 
 /// 특정자산의 거래내역 삭제
 export const deleteAssetTransaction = async (req: Request, res: Response) => {
+  // #swagger.tags = ["asset"]
   const { assetId, id } = req.params;
 
   try {

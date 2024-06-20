@@ -1,0 +1,67 @@
+get:
+  tags:
+    - budget
+  summary: Get all active budgets
+  description: Retrieve all active budgets for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  responses:
+    200:
+      description: A list of active budgets.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/Budget"
+    500:
+      description: Failed to fetch budgets.
+
+post:
+  tags:
+    - budget
+  summary: Create a new budget
+  description: Create a new budget for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date-time
+              description: The start date of the budget
+            end_date:
+              type: string
+              format: date-time
+              description: The end date of the budget
+            amount:
+              type: number
+              format: float
+              description: The amount of the budget
+            isActive:
+              type: boolean
+              description: Whether the budget is active
+  responses:
+    201:
+      description: Budget created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Budget"
+    500:
+      description: Failed to create budget.

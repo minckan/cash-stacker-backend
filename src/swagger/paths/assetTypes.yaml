@@ -1,0 +1,55 @@
+get:
+  tags:
+    - asset type
+  summary: Get all asset types
+  description: Retrieve all asset types for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  responses:
+    200:
+      description: A list of asset types.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/AssetType"
+    500:
+      description: Failed to fetch asset types.
+
+post:
+  tags:
+    - asset type
+  summary: Create a new asset type
+  description: Create a new asset type for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            asset_type_name:
+              type: string
+              description: The name of the asset type
+  responses:
+    201:
+      description: Asset type created successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AssetType"
+    500:
+      description: Failed to create asset type.

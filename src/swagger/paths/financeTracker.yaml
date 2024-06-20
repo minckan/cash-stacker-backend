@@ -1,0 +1,70 @@
+put:
+  tags:
+    - financial tracker
+  summary: Update a transaction
+  description: Update an existing financial transaction by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the transaction
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            category_id:
+              type: integer
+            amount:
+              type: number
+              format: float
+            transaction_type:
+              type: string
+            description:
+              type: string
+            transaction_date:
+              type: string
+              format: date-time
+  responses:
+    200:
+      description: Transaction updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Transaction"
+    500:
+      description: Failed to update transaction.
+
+delete:
+  tags:
+    - financial tracker
+  summary: Delete a transaction
+  description: Delete an existing financial transaction by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the transaction
+  responses:
+    204:
+      description: Transaction deleted successfully.
+    500:
+      description: Failed to delete transaction.

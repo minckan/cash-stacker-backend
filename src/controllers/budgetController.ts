@@ -6,6 +6,7 @@ export const getAllBudgets = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["budget"]
   const { workspaceId } = req.params;
   try {
     const budgets = await prisma.budget.findMany({
@@ -25,6 +26,7 @@ export const createBudget = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["budget"]
   const { workspaceId } = req.params;
   const { start_date, end_date, amount, isActive } = req.body;
 
@@ -61,6 +63,7 @@ export const updateBudget = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["budget"]
   const { workspaceId, id } = req.params;
   const { start_date, end_date, amount, isActive } = req.body;
 
@@ -99,6 +102,7 @@ export const deleteBudget = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["budget"]
   const { workspaceId, id } = req.params;
   try {
     await prisma.budget.delete({

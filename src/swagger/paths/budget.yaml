@@ -1,0 +1,73 @@
+put:
+  tags:
+    - budget
+  summary: Update a budget
+  description: Update an existing budget by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the budget
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date-time
+              description: The start date of the budget
+            end_date:
+              type: string
+              format: date-time
+              description: The end date of the budget
+            amount:
+              type: number
+              format: float
+              description: The amount of the budget
+            isActive:
+              type: boolean
+              description: Whether the budget is active
+  responses:
+    200:
+      description: Budget updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Budget"
+    500:
+      description: Failed to update budget.
+
+delete:
+  tags:
+    - budget
+  summary: Delete a budget
+  description: Delete an existing budget by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the budget
+  responses:
+    204:
+      description: Budget deleted successfully.
+    500:
+      description: Failed to delete budget.

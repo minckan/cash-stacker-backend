@@ -1,0 +1,61 @@
+put:
+  tags:
+    - invitation
+  summary: Update an invitation
+  description: Update the status of an existing invitation by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the invitation
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: string
+              description: The new status of the invitation
+  responses:
+    200:
+      description: Invitation updated successfully.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Invitation"
+    500:
+      description: Failed to update invitation.
+
+delete:
+  tags:
+    - invitation
+  summary: Delete an invitation
+  description: Delete an existing invitation by its ID.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the invitation
+  responses:
+    204:
+      description: Invitation deleted successfully.
+    500:
+      description: Failed to delete invitation.

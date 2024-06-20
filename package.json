@@ -8,7 +8,9 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "ts-node -r tsconfig-paths/register src/index.ts",
-    "swagger": "node ./swagger.js"
+    "swagger": "ts-node ./swagger.ts",
+    "api-docs": "swagger-cli bundle ./src/swagger/openapi.yaml --outfile build/swagger.yaml --type yaml",
+    "predev": "yarn api-docs"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.7.1",
@@ -27,16 +29,20 @@
     "express-winston": "^4.2.0",
     "firebase-admin": "^12.1.1",
     "node-cache": "^5.1.2",
+    "swagger-cli": "^4.0.4",
     "swagger-jsdoc": "^6.2.8",
+    "swagger-typescript-api": "^13.0.7",
     "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "winston": "^3.13.0",
+    "yamljs": "^0.3.0",
     "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
+    "@types/yamljs": "^0.2.34",
     "prisma": "^5.15.0",
     "swagger-autogen": "^2.23.7",
     "tsconfig-paths": "^4.2.0"

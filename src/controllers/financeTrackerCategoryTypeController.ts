@@ -6,6 +6,7 @@ export const getCategoriesByType = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial category"]
   const { workspaceId, type } = req.params;
   try {
     const categories = await prisma.transactionCategory.findMany({
@@ -25,6 +26,7 @@ export const createCategory = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial category"]
   const { workspaceId } = req.params;
   const { category_name, category_type } = req.body;
   try {
@@ -46,6 +48,7 @@ export const updateCategory = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial category"]
   const { workspaceId, id } = req.params;
   const { category_name, category_type } = req.body;
   try {
@@ -67,6 +70,7 @@ export const deleteCategory = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  // #swagger.tags = ["financial category"]
   const { workspaceId, id } = req.params;
   try {
     await prisma.transactionCategory.delete({

@@ -1,0 +1,29 @@
+get:
+  tags:
+    - financial category
+  summary: Get financial categories by type
+  description: Retrieve all financial categories of a specified type for the specified workspace.
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: type
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The type of the categories (income or expense)
+  responses:
+    200:
+      description: A list of categories.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "../openapi.yaml#/components/schemas/TransactionCategory"
+    500:
+      description: Failed to fetch categories.

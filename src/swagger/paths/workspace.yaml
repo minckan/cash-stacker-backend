@@ -1,0 +1,23 @@
+get:
+  tags:
+    - workspace
+  summary: Get a workspace by ID
+  description: Retrieve a specific workspace by its ID.
+  parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace.
+  responses:
+    200:
+      description: A workspace object.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Workspace"
+    404:
+      description: Workspace not found.
+    500:
+      description: Failed to retrieve workspace.

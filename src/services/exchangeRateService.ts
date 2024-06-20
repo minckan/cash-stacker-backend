@@ -7,6 +7,7 @@ import {
   isBusinessDay,
   isBefore11AM,
 } from "../utils/dateUtils";
+import { logger } from "express-winston";
 
 dotenv.config();
 
@@ -33,7 +34,8 @@ const fetchExchangeRateFromApi = async (date: string) => {
 
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log("[ERROR in fetchExchangeRateFromApi] ", error);
+    console.log("[ERROR in fetchExchangeRateFromApi] ", error.code);
 
     throw new Error(error);
   }
@@ -61,6 +63,6 @@ export const getExchangeRate = async () => {
     apiCache.set(cacheKey, data);
     return data;
   } catch (error) {
-    throw new Error("Error fetching exchange rate data");
+    throw new Error(error);
   }
 };

@@ -1,0 +1,27 @@
+get:
+  tags:
+    - exchange-rate
+  summary: Fetch exchange rates
+  description: Retrieve the latest exchange rates.
+  responses:
+    200:
+      description: Successfully fetched exchange rates.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              rates:
+                type: object
+                additionalProperties:
+                  type: number
+                description: Exchange rates with currency codes as keys and rates as values.
+              base:
+                type: string
+                description: Base currency for the exchange rates.
+              date:
+                type: string
+                format: date
+                description: The date when the exchange rates were last updated.
+    500:
+      description: Failed to fetch exchange rates.
