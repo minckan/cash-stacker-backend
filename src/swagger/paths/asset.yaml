@@ -4,6 +4,12 @@ get:
   summary: Get an asset by ID
   description: Retrieve a specific asset by its ID.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -32,6 +38,12 @@ put:
   summary: Update an asset name
   description: Update the name of a specific asset by its ID.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+      type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -69,6 +81,12 @@ delete:
   summary: Delete an asset by ID
   description: Delete a specific asset by its ID.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

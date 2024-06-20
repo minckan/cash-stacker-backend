@@ -4,6 +4,12 @@ get:
   summary: Get all invitations
   description: Retrieve all invitations sent from the specified workspace.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -28,6 +34,12 @@ post:
   summary: Create a new invitation
   description: Create a new invitation for the specified workspace.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

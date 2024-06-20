@@ -4,6 +4,12 @@ get:
   summary: Get a workspace by ID
   description: Retrieve a specific workspace by its ID.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: id
       in: path
       required: true

@@ -4,6 +4,12 @@ get:
   summary: Get monthly transactions
   description: Retrieve all financial transactions for the specified month.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

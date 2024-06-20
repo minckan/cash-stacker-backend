@@ -3,6 +3,13 @@ post:
     - workspace
   summary: Create a new workspace
   description: Create a new workspace with the provided information.
+  parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
   requestBody:
     required: true
     content:
@@ -37,6 +44,13 @@ get:
     - workspace
   summary: Get all workspaces
   description: Retrieve all workspaces.
+  parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
   responses:
     200:
       description: A list of workspaces.

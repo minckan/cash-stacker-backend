@@ -4,6 +4,12 @@ get:
   summary: Get daily transactions
   description: Retrieve all financial transactions for the specified date.
   parameters:
+    - name: authorization
+      in: headers
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

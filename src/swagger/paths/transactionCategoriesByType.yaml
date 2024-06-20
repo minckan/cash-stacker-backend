@@ -4,6 +4,12 @@ get:
   summary: Get financial categories by type
   description: Retrieve all financial categories of a specified type for the specified workspace.
   parameters:
+    - name: authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -15,6 +21,7 @@ get:
       required: true
       schema:
         type: string
+        enum: [income, expense]
       description: The type of the categories (income or expense)
   responses:
     200:
