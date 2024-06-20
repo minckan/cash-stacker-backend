@@ -10,7 +10,8 @@
     "dev": "ts-node -r tsconfig-paths/register src/index.ts",
     "swagger": "ts-node ./swagger.ts",
     "api-docs": "swagger-cli bundle ./src/swagger/openapi.yaml --outfile build/swagger.yaml --type yaml",
-    "predev": "yarn api-docs"
+    "predev": "yarn api-docs",
+    "swagger-typescript-api": "swagger-typescript-api -p build/swagger.yaml -r -o ./models --modular -d --extract-request-body --extract-response-body --extract-response-error --axios"
   },
   "dependencies": {
     "@google-cloud/bigquery": "^7.7.1",
