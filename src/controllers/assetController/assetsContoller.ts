@@ -5,9 +5,15 @@ import { Prisma } from "@prisma/client";
 /// 자산 생성
 export const createAsset = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
-  const { workspace_id } = req.params;
-  const { asset_type_id, asset_name, balance, transactions, currency_code } =
-    req.body;
+
+  const {
+    workspace_id,
+    asset_type_id,
+    asset_name,
+    balance,
+    transactions,
+    currency_code,
+  } = req.body;
 
   try {
     // 트랜잭션 시작
@@ -56,7 +62,7 @@ export const createAsset = async (req: Request, res: Response) => {
 /// 자산 전체 조회
 export const getAssets = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
-  const { workspace_id } = req.params;
+  const { workspace_id } = req.body;
 
   try {
     const allAssets = await prisma.asset.findMany({
@@ -72,9 +78,10 @@ export const getAssets = async (req: Request, res: Response) => {
 export const getAssetById = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
   const { id } = req.params;
+  const { workspace_id } = req.body;
   try {
     const oneAsset = await prisma.asset.findUnique({
-      where: { workspace_id: id, asset_id: Number(id) },
+      where: { workspace_id, asset_id: Number(id) },
     });
     res.status(201).send(oneAsset);
   } catch (error) {
@@ -85,8 +92,8 @@ export const getAssetById = async (req: Request, res: Response) => {
 /// 자산 이름 업데이트
 export const updateAsset = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
-  const { workspace_id, id } = req.params;
-  const { asset_name } = req.body;
+  const { id } = req.params;
+  const { asset_name, workspace_id } = req.body;
 
   try {
     const updatedAsset = await prisma.asset.update({
@@ -102,7 +109,8 @@ export const updateAsset = async (req: Request, res: Response) => {
 /// 자산 삭제
 export const deleteAsset = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
-  const { workspace_id, id } = req.params;
+  const { id } = req.params;
+  const { workspace_id } = req.body;
 
   try {
     await prisma.$transaction(async (prisma: Prisma.TransactionClient) => {

@@ -55,11 +55,13 @@ model Transaction {
 }
 
 model TransactionCategory {
-  category_id   Int           @id @default(autoincrement())
+  category_id   Int    @id @default(autoincrement())
   workspace_id  String
   category_name String
   category_type String // 'income' or 'expense'
-  Transaction   Transaction[]
+
+  // 빈 관계 필드 추가
+  transactions Transaction[]
 
   @@index([workspace_id])
 }

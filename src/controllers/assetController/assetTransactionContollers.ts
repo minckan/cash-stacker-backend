@@ -5,7 +5,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 /// 특정 자산 거래내역 수정
 export const updateAssetTransaction = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
-  const { workspace_id, id, assetId } = req.params;
+  const { id, assetId } = req.params;
   const {
     amount,
     transaction_type,
@@ -18,7 +18,10 @@ export const updateAssetTransaction = async (req: Request, res: Response) => {
 
   try {
     const updatedAssetTr = await prisma.assetTransaction.update({
-      where: { asset_id: Number(assetId), transaction_id: Number(id) },
+      where: {
+        asset_id: Number(assetId),
+        transaction_id: Number(id),
+      },
       data: {
         amount,
         transaction_type,

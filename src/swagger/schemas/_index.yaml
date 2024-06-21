@@ -110,10 +110,6 @@ Asset:
       format: date-time
     currency_code:
       type: string
-    transactions:
-      type: array
-      items:
-        $ref: "../openapi.yaml#/components/schemas/AssetToTransaction"
 
 AssetTransaction:
   type: object

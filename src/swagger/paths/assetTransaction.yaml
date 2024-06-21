@@ -5,7 +5,7 @@ get:
   description: Retrieve a specific asset transaction by its ID.
   parameters:
     - name: authorization
-      in: headers
+      in: header
       required: true
       schema:
         type: string
@@ -37,3 +37,55 @@ get:
             $ref: "../openapi.yaml#/components/schemas/AssetTransaction"
     500:
       description: Failed to retrieve asset transaction.
+
+delete:
+  tags:
+    - asset
+  summary: Delete an asset transaction by ID
+  description: Delete a specific asset transaction by its ID.
+  parameters:
+    - name: authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Bearer authorization
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: assetId
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: The ID of the asset transaction
+  responses:
+    201:
+      description: Successfully deleted the asset transaction.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                example: "deleted successfully"
+    500:
+      description: Failed to delete asset transaction.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Failed to delete asset transaction"

@@ -28,8 +28,14 @@ export const createCategory = async (
 ): Promise<void> => {
   // #swagger.tags = ["financial category"]
   const { workspaceId } = req.params;
+  console.log(req.params);
   const { category_name, category_type } = req.body;
   try {
+    console.log({
+      workspace_id: workspaceId,
+      category_name,
+      category_type,
+    });
     const category = await prisma.transactionCategory.create({
       data: {
         workspace_id: workspaceId,
@@ -39,7 +45,7 @@ export const createCategory = async (
     });
     res.status(201).json(category);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create category" });
+    res.status(500).json({ message: "Failed to create category", error });
   }
 };
 
@@ -50,13 +56,12 @@ export const updateCategory = async (
 ): Promise<void> => {
   // #swagger.tags = ["financial category"]
   const { workspaceId, id } = req.params;
-  const { category_name, category_type } = req.body;
+  const { category_name } = req.body;
   try {
     const category = await prisma.transactionCategory.update({
       where: { category_id: parseInt(id) },
       data: {
         category_name,
-        category_type,
       },
     });
     res.json(category);

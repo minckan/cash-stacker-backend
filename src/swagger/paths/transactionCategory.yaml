@@ -32,9 +32,6 @@ put:
             category_name:
               type: string
               description: The name of the category
-            category_type:
-              type: string
-              description: The type of the category (income or expense)
   responses:
     200:
       description: Category updated successfully.
