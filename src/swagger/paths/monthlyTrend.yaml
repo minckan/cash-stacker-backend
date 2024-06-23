@@ -4,12 +4,6 @@ get:
   summary: Get monthly asset trend
   description: Retrieve the monthly trend of assets for the specified workspace.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

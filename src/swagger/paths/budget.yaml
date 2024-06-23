@@ -4,12 +4,6 @@ put:
   summary: Update a budget
   description: Update an existing budget by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -60,12 +54,6 @@ delete:
   summary: Delete a budget
   description: Delete an existing budget by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

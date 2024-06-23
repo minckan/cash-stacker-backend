@@ -4,12 +4,6 @@ put:
   summary: Update a financial category
   description: Update an existing financial category by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

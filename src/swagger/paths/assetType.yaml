@@ -4,12 +4,6 @@ put:
   summary: Update an asset type
   description: Update an existing asset type by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -48,12 +42,6 @@ delete:
   summary: Delete an asset type
   description: Delete an existing asset type by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

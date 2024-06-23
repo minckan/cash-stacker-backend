@@ -4,12 +4,6 @@ post:
   summary: Create a new asset
   description: Create a new asset for the specified workspace.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -52,12 +46,6 @@ get:
   summary: Get all assets
   description: Retrieve all assets for the specified workspace.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

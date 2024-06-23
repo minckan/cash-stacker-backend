@@ -4,12 +4,6 @@ put:
   summary: Update a transaction
   description: Update an existing financial transaction by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -57,12 +51,6 @@ delete:
   summary: Delete a transaction
   description: Delete an existing financial transaction by its ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true

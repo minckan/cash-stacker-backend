@@ -28,12 +28,6 @@ put:
   summary: Update user status
   description: Update the status of a user by their user ID.
   parameters:
-    - name: authorization
-      in: headers
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: id
       in: path
       required: true

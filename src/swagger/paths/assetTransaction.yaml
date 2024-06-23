@@ -4,12 +4,6 @@ get:
   summary: Get an asset transaction by ID
   description: Retrieve a specific asset transaction by its ID.
   parameters:
-    - name: authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
@@ -44,12 +38,6 @@ delete:
   summary: Delete an asset transaction by ID
   description: Delete a specific asset transaction by its ID.
   parameters:
-    - name: authorization
-      in: header
-      required: true
-      schema:
-        type: string
-      description: Bearer authorization
     - name: workspaceId
       in: path
       required: true
