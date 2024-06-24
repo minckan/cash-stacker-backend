@@ -55,16 +55,16 @@ app.use("/users", userRoutes);
 // 워크스페이스
 app.use("/workspaces", workspaceRoutes);
 // 자산
-app.use("/assets", assetRoutes);
+app.use("/:workspaceId/assets", assetRoutes);
 // 가계부
-app.use("/finance", financeTrackerRoutes);
+app.use("/:workspaceId/finance", financeTrackerRoutes);
 // 자산 타입
-app.use("/asset/type", assetTypesRoutes);
+app.use("/:workspaceId/asset/type", assetTypesRoutes);
 // 가계부 카테고리
-app.use("/finance/category", financeTrackerCategoryRoutes);
+app.use("/:workspaceId/finance/category", financeTrackerCategoryRoutes);
 // 예산
-app.use("/budget", budgetRoutes);
+app.use("/:workspaceId/budget", budgetRoutes);
 // 초대
-app.use("/invitation", invitationRoutes);
+app.use("/:workspaceId/invitation", invitationRoutes);
 
 export default app;
