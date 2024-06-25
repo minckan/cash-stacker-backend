@@ -3,8 +3,8 @@ post:
     - workspace
   summary: Create a new workspace
   description: Create a new workspace with the provided information.
-  parameters:
-
+  security:
+    - bearerAuth: []
   requestBody:
     required: true
     content:
@@ -39,8 +39,8 @@ get:
     - workspace
   summary: Get all workspaces
   description: Retrieve all workspaces.
-  parameters:
-
+  security:
+    - bearerAuth: []
   responses:
     200:
       description: A list of workspaces.

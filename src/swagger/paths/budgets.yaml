@@ -3,6 +3,8 @@ get:
     - budget
   summary: Get all active budgets
   description: Retrieve all active budgets for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -27,6 +29,8 @@ post:
     - budget
   summary: Create a new budget
   description: Create a new budget for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

@@ -3,6 +3,8 @@ put:
     - financial tracker
   summary: Update a transaction
   description: Update an existing financial transaction by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -50,6 +52,8 @@ delete:
     - financial tracker
   summary: Delete a transaction
   description: Delete an existing financial transaction by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

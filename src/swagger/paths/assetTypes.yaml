@@ -3,6 +3,8 @@ get:
     - asset type
   summary: Get all asset types
   description: Retrieve all asset types for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -27,6 +29,8 @@ post:
     - asset type
   summary: Create a new asset type
   description: Create a new asset type for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

@@ -3,6 +3,8 @@ put:
     - asset type
   summary: Update an asset type
   description: Update an existing asset type by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -41,6 +43,8 @@ delete:
     - asset type
   summary: Delete an asset type
   description: Delete an existing asset type by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

@@ -3,6 +3,8 @@ get:
     - financial tracker
   summary: Get daily transactions
   description: Retrieve all financial transactions for the specified date.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

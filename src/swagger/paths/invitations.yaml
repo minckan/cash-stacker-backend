@@ -3,6 +3,8 @@ get:
     - invitation
   summary: Get all invitations
   description: Retrieve all invitations sent from the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -27,6 +29,8 @@ post:
     - invitation
   summary: Create a new invitation
   description: Create a new invitation for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

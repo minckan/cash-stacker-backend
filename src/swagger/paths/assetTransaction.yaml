@@ -3,6 +3,8 @@ get:
     - asset
   summary: Get an asset transaction by ID
   description: Retrieve a specific asset transaction by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -37,6 +39,8 @@ delete:
     - asset
   summary: Delete an asset transaction by ID
   description: Delete a specific asset transaction by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

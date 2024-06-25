@@ -3,6 +3,8 @@ get:
     - financial category
   summary: Get financial categories by type
   description: Retrieve all financial categories of a specified type for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

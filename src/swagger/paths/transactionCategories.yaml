@@ -3,6 +3,8 @@ post:
     - financial category
   summary: Create a new financial category
   description: Create a new financial category for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

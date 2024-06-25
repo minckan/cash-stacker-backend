@@ -3,6 +3,8 @@ get:
     - financial tracker
   summary: Get monthly transactions
   description: Retrieve all financial transactions for the specified month.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

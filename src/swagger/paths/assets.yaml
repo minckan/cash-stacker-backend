@@ -3,6 +3,8 @@ post:
     - asset
   summary: Create a new asset
   description: Create a new asset for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -45,6 +47,8 @@ get:
     - asset
   summary: Get all assets
   description: Retrieve all assets for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

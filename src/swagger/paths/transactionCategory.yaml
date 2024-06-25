@@ -3,6 +3,8 @@ put:
     - financial category
   summary: Update a financial category
   description: Update an existing financial category by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -41,6 +43,8 @@ delete:
     - financial category
   summary: Delete a financial category
   description: Delete an existing financial category by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

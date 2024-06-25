@@ -3,6 +3,8 @@ post:
     - financial tracker
   summary: Create a new transaction
   description: Create a new financial transaction for the specified workspace.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

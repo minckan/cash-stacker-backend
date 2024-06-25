@@ -3,6 +3,8 @@ put:
     - invitation
   summary: Update an invitation
   description: Update the status of an existing invitation by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

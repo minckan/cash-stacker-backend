@@ -3,6 +3,8 @@ put:
     - budget
   summary: Update a budget
   description: Update an existing budget by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path
@@ -53,6 +55,8 @@ delete:
     - budget
   summary: Delete a budget
   description: Delete an existing budget by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: workspaceId
       in: path

@@ -3,6 +3,8 @@ get:
     - workspace
   summary: Get a workspace by ID
   description: Retrieve a specific workspace by its ID.
+  security:
+    - bearerAuth: []
   parameters:
     - name: id
       in: path
