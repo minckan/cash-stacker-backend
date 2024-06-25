@@ -83,12 +83,18 @@ export const updateUserStatus = async (
   const { push_enable, darkMode_enable, role } = req.body;
 
   try {
+    const original_user = await prisma.user.findFirst({
+      where: {
+        user_id: id,
+      },
+    });
     const user = await prisma.user.update({
       where: { user_id: id },
       data: {
-        push_enable: Boolean(push_enable),
-        darkMode_enable: Boolean(darkMode_enable),
-        role: role,
+        push_enable: Boolean(push_enable) ?? original_user.push_enable,
+        darkMode_enable:
+          Boolean(darkMode_enable) ?? original_user.darkMode_enable,
+        role: role ?? original_user.role,
       },
     });
     res.status(201).send({ user_id: id });

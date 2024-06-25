@@ -15,14 +15,18 @@ export async function authenticateToken(
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    console.log("decodedToken: ", decodedToken);
-    console.log("decodedToken.uid: ", decodedToken.uid);
+    console.log("Token is valid:", decodedToken);
     const user = await admin.auth().getUser(decodedToken.uid);
     if (user) {
       next();
     }
   } catch (error) {
-    console.error("Error verifying Firebase ID token:", error);
-    res.status(403).send("Forbidden: Invalid token");
+    if (error.code === "auth/id-token-expired") {
+      console.error("ID token has expired:", error);
+      throw error;
+    } else {
+      console.error("Error verifying ID token:", error);
+      throw error;
+    }
   }
 }

@@ -8,7 +8,7 @@ import {
   getDailyTransactions,
 } from "../controllers/transactionController";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 // 가계부 거래내역 생성
 router.post("/", authenticateToken, createTransaction);

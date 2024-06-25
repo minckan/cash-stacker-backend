@@ -6,7 +6,7 @@ import {
 } from "../controllers/userController";
 import { authenticateToken } from "../middleware/authMiddleware";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // 유저 조회
 router.get("/:id", getUser);

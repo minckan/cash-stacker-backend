@@ -49,14 +49,21 @@ export const updateTransaction = async (
     transaction_date,
   } = req.body;
   try {
+    const original = await prisma.transaction.findFirst({
+      where: {
+        transaction_id: parseInt(id),
+      },
+    });
     const transaction = await prisma.transaction.update({
       where: { transaction_id: parseInt(id) },
       data: {
-        category_id: parseInt(category_id),
-        amount: parseFloat(amount),
-        transaction_type,
-        description,
-        transaction_date: new Date(transaction_date),
+        category_id: category_id ? parseInt(category_id) : original.category_id,
+        amount: amount ? parseFloat(amount) : original.amount,
+        transaction_type: transaction_type ?? original.transaction_type,
+        description: description ?? original.description,
+        transaction_date: transaction_date
+          ? new Date(transaction_date)
+          : original.transaction_date,
       },
     });
     res.json(transaction);

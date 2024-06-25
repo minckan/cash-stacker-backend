@@ -7,7 +7,7 @@ import {
   updateAssetType,
 } from "../controllers/assetTypeController";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 // 자산 타입 전체조회
 router.get("/", authenticateToken, getAllAssetTypes);

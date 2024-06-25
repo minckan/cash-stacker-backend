@@ -12,7 +12,6 @@ export const getAllBudgets = async (
     const budgets = await prisma.budget.findMany({
       where: {
         workspace_id: workspaceId,
-        isActive: true,
       },
     });
     res.json(budgets);
@@ -31,16 +30,18 @@ export const createBudget = async (
   const { start_date, end_date, amount, isActive } = req.body;
 
   try {
-    // 기존 활성화된 예산 비활성화
-    await prisma.budget.updateMany({
-      where: {
-        workspace_id: workspaceId,
-        isActive: true,
-      },
-      data: {
-        isActive: false,
-      },
-    });
+    if (isActive) {
+      // 기존 활성화된 예산 비활성화
+      await prisma.budget.updateMany({
+        where: {
+          workspace_id: workspaceId,
+          isActive: true,
+        },
+        data: {
+          isActive: false,
+        },
+      });
+    }
 
     // 새로운 예산 생성
     const budget = await prisma.budget.create({
@@ -68,7 +69,7 @@ export const updateBudget = async (
   const { start_date, end_date, amount, isActive } = req.body;
 
   try {
-    if (isActive) {
+    if (Boolean(isActive)) {
       // 기존 활성화된 예산 비활성화
       await prisma.budget.updateMany({
         where: {
@@ -81,19 +82,27 @@ export const updateBudget = async (
       });
     }
 
+    const original = await prisma.budget.findFirst({
+      where: {
+        budget_id: parseInt(id),
+      },
+    });
+
+    console.log(original);
+
     // 예산 수정
     const budget = await prisma.budget.update({
       where: { budget_id: parseInt(id) },
       data: {
-        start_date: new Date(start_date),
-        end_date: new Date(end_date),
-        amount: parseFloat(amount),
-        isActive: Boolean(isActive),
+        start_date: start_date ? new Date(start_date) : original.start_date,
+        end_date: end_date ? new Date(end_date) : original.end_date,
+        amount: amount ? parseFloat(amount) : original.amount,
+        isActive: isActive ? Boolean(isActive) : original.isActive,
       },
     });
     res.json(budget);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update budget" });
+    res.status(500).json({ message: "Failed to update budget", error });
   }
 };
 
@@ -103,7 +112,7 @@ export const deleteBudget = async (
   res: Response
 ): Promise<void> => {
   // #swagger.tags = ["budget"]
-  const { workspaceId, id } = req.params;
+  const { id } = req.params;
   try {
     await prisma.budget.delete({
       where: { budget_id: parseInt(id) },

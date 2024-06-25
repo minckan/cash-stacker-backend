@@ -7,7 +7,7 @@ import {
   deleteCategory,
 } from "../controllers/financeTrackerCategoryTypeController";
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
 // 가계부 카테고리 생성
 router.post("/", authenticateToken, createCategory);

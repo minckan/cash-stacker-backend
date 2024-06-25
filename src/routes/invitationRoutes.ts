@@ -7,7 +7,7 @@ import {
   getAllInvitations,
 } from "../controllers/invitationController";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // 초대 생성
 router.post("/", authenticateToken, createInvitation);

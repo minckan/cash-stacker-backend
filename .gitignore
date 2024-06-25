@@ -45,3 +45,5 @@ prisma/migrations/
 prisma/dev.db
 
 
+# 테스트 파일
+any.json

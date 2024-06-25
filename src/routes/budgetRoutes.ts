@@ -8,7 +8,7 @@ import {
   updateBudget,
 } from "../controllers/budgetController";
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // 활성중인 예산 조회
 router.get("/", authenticateToken, getAllBudgets);
