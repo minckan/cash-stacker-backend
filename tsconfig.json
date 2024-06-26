@@ -7,12 +7,12 @@
     "strict": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots": ["./node_modules/@types", "./types"],
+    "typeRoots": ["./node_modules/@types", "src/types"],
     "types": ["node", "express"],
     "moduleResolution": "node", // 이 부분을 추가
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "types/**/*.d.ts", "src/swagger-output.json"],
+  "include": ["src/**/*.ts", "src/types/*.d.ts", "src/swagger-output.json"],
   "exclude": ["node_modules"],
   "types": ["node", "express"],
   "lib": ["es2015"]

@@ -23,14 +23,14 @@ export const createTransaction = async (
         category_id: parseInt(category_id),
         amount: parseFloat(amount),
         transaction_type,
-        description,
+        description: description ?? "",
         transaction_date: new Date(transaction_date),
-        payment_method,
+        payment_method: payment_method["type"],
       },
     });
     res.status(201).json(transaction);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create transaction" });
+    res.status(500).json({ message: "Failed to create transaction", error });
   }
 };
 
@@ -68,7 +68,7 @@ export const updateTransaction = async (
     });
     res.json(transaction);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update transaction" });
+    res.status(500).json({ message: "Failed to update transaction", error });
   }
 };
 
@@ -85,7 +85,7 @@ export const deleteTransaction = async (
     });
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete transaction" });
+    res.status(500).json({ message: "Failed to delete transaction", error });
   }
 };
 
@@ -115,7 +115,9 @@ export const getMonthlyTransactions = async (
     });
     res.json(transactions);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch monthly transactions" });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch monthly transactions", error });
   }
 };
 
@@ -140,6 +142,8 @@ export const getDailyTransactions = async (
     });
     res.json(transactions);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch daily transactions" });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch daily transactions", error });
   }
 };
