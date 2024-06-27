@@ -6,7 +6,6 @@ export const createTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["financial tracker"]
   const { workspaceId } = req.params;
   const {
     category_id,
@@ -25,7 +24,7 @@ export const createTransaction = async (
         transaction_type,
         description: description ?? "",
         transaction_date: new Date(transaction_date),
-        payment_method: payment_method["type"],
+        payment_method: payment_method,
       },
     });
     res.status(201).json(transaction);
@@ -39,7 +38,6 @@ export const updateTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["financial tracker"]
   const { id } = req.params;
   const {
     category_id,
@@ -77,7 +75,6 @@ export const deleteTransaction = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["financial tracker"]
   const { id } = req.params;
   try {
     await prisma.transaction.delete({
@@ -94,7 +91,6 @@ export const getMonthlyTransactions = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["financial tracker"]
   const { workspaceId, monthKey } = req.params;
   try {
     const startDate = new Date(monthKey);
@@ -112,6 +108,9 @@ export const getMonthlyTransactions = async (
           lte: endDate,
         },
       },
+      include: {
+        category: true,
+      },
     });
     res.json(transactions);
   } catch (error) {
@@ -126,7 +125,6 @@ export const getDailyTransactions = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["financial tracker"]
   const { workspaceId, dateKey } = req.params;
   try {
     const date = new Date(dateKey);
@@ -138,6 +136,9 @@ export const getDailyTransactions = async (
           gte: date,
           lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
         },
+      },
+      include: {
+        category: true,
       },
     });
     res.json(transactions);

@@ -24,7 +24,6 @@ get:
               properties:
                 month:
                   type: string
-                  format: date
                 total_balance:
                   type: number
                   format: float
