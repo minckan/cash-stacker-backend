@@ -17,7 +17,7 @@ export const getCategoriesByType = async (
     });
     res.json(categories);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch categories" });
+    res.status(500).json({ message: "Failed to fetch categories" });
   }
 };
 
@@ -66,7 +66,7 @@ export const updateCategory = async (
     });
     res.json(category);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update category" });
+    res.status(500).json({ message: "Failed to update category" });
   }
 };
 
@@ -78,11 +78,21 @@ export const deleteCategory = async (
   // #swagger.tags = ["financial category"]
   const { workspaceId, id } = req.params;
   try {
-    await prisma.transactionCategory.delete({
+    const isCategoryInUse = await prisma.transaction.findMany({
       where: { category_id: parseInt(id) },
     });
-    res.status(204).end();
+
+    if (isCategoryInUse.length > 0) {
+      res.status(404).json({
+        message: "사용중인 카테고리는 삭제할 수 없습니다.",
+      });
+    } else {
+      await prisma.transactionCategory.delete({
+        where: { category_id: parseInt(id) },
+      });
+      res.status(204).end();
+    }
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete category" });
+    res.status(500).json({ message: "Failed to delete category" });
   }
 };
