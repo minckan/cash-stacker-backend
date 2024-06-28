@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/client";
+import getMonthlyTransactionInfo from "../services/transactionService/getMonthlyTransactionInfo";
+import getDailyTransactionInfo from "../services/transactionService/getDailyTransactionInfo";
 
 // 가계부 거래내역 생성
 export const createTransaction = async (
@@ -93,26 +95,8 @@ export const getMonthlyTransactions = async (
 ): Promise<void> => {
   const { workspaceId, monthKey } = req.params;
   try {
-    const startDate = new Date(monthKey);
-    const endDate = new Date(
-      startDate.getFullYear(),
-      startDate.getMonth() + 1,
-      0
-    );
-
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        workspace_id: workspaceId,
-        transaction_date: {
-          gte: startDate,
-          lte: endDate,
-        },
-      },
-      include: {
-        category: true,
-      },
-    });
-    res.json(transactions);
+    const response = await getMonthlyTransactionInfo({ workspaceId, monthKey });
+    res.json(response);
   } catch (error) {
     res
       .status(500)
@@ -127,21 +111,8 @@ export const getDailyTransactions = async (
 ): Promise<void> => {
   const { workspaceId, dateKey } = req.params;
   try {
-    const date = new Date(dateKey);
-
-    const transactions = await prisma.transaction.findMany({
-      where: {
-        workspace_id: workspaceId,
-        transaction_date: {
-          gte: date,
-          lt: new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1),
-        },
-      },
-      include: {
-        category: true,
-      },
-    });
-    res.json(transactions);
+    const response = getDailyTransactionInfo({ workspaceId, dateKey });
+    res.json(response);
   } catch (error) {
     res
       .status(500)
