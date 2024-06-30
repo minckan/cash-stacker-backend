@@ -44,6 +44,8 @@ paths:
     $ref: "./paths/transactionCategoriesByType.yaml"
   /{workspaceId}/budget:
     $ref: "./paths/budgets.yaml"
+  /{workspaceId}/budget/active:
+    $ref: "./paths/budgetActive.yaml"
   /{workspaceId}/budget/{id}:
     $ref: "./paths/budget.yaml"
   /{workspaceId}/invitation:

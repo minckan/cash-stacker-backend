@@ -17,7 +17,9 @@ export const getCategoriesByType = async (
     });
     res.json(categories);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch categories" });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch categories by type", error });
   }
 };
 
@@ -66,7 +68,7 @@ export const updateCategory = async (
     });
     res.json(category);
   } catch (error) {
-    res.status(500).json({ message: "Failed to update category" });
+    res.status(500).json({ message: "Failed to update category", error });
   }
 };
 
@@ -93,6 +95,6 @@ export const deleteCategory = async (
       res.status(204).end();
     }
   } catch (error) {
-    res.status(500).json({ message: "Failed to delete category" });
+    res.status(500).json({ message: "Failed to delete category", error });
   }
 };

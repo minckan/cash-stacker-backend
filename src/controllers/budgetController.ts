@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/client";
+import {
+  getActiveBudgetInfo,
+  getCurrentExpendableBudget,
+} from "../services/budgetService/getActiveBudgetInfo";
 
 // 활성중인 예산 조회
 export const getAllBudgets = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["budget"]
   const { workspaceId } = req.params;
   try {
     const budgets = await prisma.budget.findMany({
@@ -16,7 +19,26 @@ export const getAllBudgets = async (
     });
     res.json(budgets);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch budgets" });
+    res.status(500).json({ message: "Failed to fetch budgets", error });
+  }
+};
+
+export const getActiveBudget = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { workspaceId } = req.params;
+
+  try {
+    const budget = await getActiveBudgetInfo();
+
+    const expendableBudget = await getCurrentExpendableBudget(
+      workspaceId,
+      budget
+    );
+    res.json({ budget, expendableBudget });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch active budgets", error });
   }
 };
 
@@ -25,7 +47,6 @@ export const createBudget = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["budget"]
   const { workspaceId } = req.params;
   const { start_date, end_date, amount, isActive } = req.body;
 
@@ -55,7 +76,7 @@ export const createBudget = async (
     });
     res.status(201).json(budget);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create budget" });
+    res.status(500).json({ message: "Failed to create budget", error });
   }
 };
 
@@ -64,7 +85,6 @@ export const updateBudget = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["budget"]
   const { workspaceId, id } = req.params;
   const { start_date, end_date, amount, isActive } = req.body;
 
@@ -111,7 +131,6 @@ export const deleteBudget = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["budget"]
   const { id } = req.params;
   try {
     await prisma.budget.delete({
@@ -119,6 +138,6 @@ export const deleteBudget = async (
     });
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete budget" });
+    res.status(500).json({ message: "Failed to delete budget", error });
   }
 };

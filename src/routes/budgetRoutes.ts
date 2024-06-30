@@ -4,14 +4,18 @@ import { authenticateToken } from "../middleware/authMiddleware";
 import {
   createBudget,
   deleteBudget,
+  getActiveBudget,
   getAllBudgets,
   updateBudget,
 } from "../controllers/budgetController";
 
 const router = express.Router({ mergeParams: true });
 
-// 활성중인 예산 조회
+// 전체 예산 조회
 router.get("/", authenticateToken, getAllBudgets);
+
+// 활성중인 예산 조회
+router.get("/active", authenticateToken, getActiveBudget);
 
 // 예산 생성
 router.post("/", authenticateToken, createBudget);

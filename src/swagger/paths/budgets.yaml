@@ -1,7 +1,7 @@
 get:
   tags:
     - budget
-  summary: Get all active budgets
+  summary: Get all budgets
   description: Retrieve all active budgets for the specified workspace.
   security:
     - bearerAuth: []

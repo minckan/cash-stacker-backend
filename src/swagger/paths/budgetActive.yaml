@@ -1,0 +1,37 @@
+get:
+  tags:
+    - budget
+  summary: Get active budgets
+  description: Retrieve all budgets for the specified workspace.
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  responses:
+    200:
+      description: A list of active budgets.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              budget:
+                $ref: "../openapi.yaml#/components/schemas/Budget"
+                nullable: true
+              expendableBudget:
+                type: object
+                properties:
+                  expendableBudget:
+                    type: number
+                    example: 500.0
+                  percentage:
+                    type: number
+                    example: 50.0
+                nullable: true
+    500:
+      description: Failed to fetch budgets.
