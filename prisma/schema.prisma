@@ -43,7 +43,7 @@ model Transaction {
   workspace_id     String
   amount           Float
   transaction_type String
-  payment_method   String
+  payment_method   String?
   description      String
   transaction_date DateTime
   created_at       DateTime @default(now())

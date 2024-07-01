@@ -18,6 +18,15 @@ export const createTransaction = async (
     payment_method,
   } = req.body;
   try {
+    console.log({
+      workspace_id: workspaceId,
+      category_id: parseInt(category_id),
+      amount: parseFloat(amount),
+      transaction_type,
+      description: description ?? "",
+      transaction_date: new Date(transaction_date),
+      payment_method: payment_method,
+    });
     const transaction = await prisma.transaction.create({
       data: {
         workspace_id: workspaceId,
