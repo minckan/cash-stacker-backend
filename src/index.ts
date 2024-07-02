@@ -4,7 +4,7 @@ import admin from "./config/firebaseAdmin";
 
 dotenv.config();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 const startServer = async () => {
   app.listen(port, () => {
