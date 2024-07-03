@@ -2,66 +2,69 @@ import { Request, Response } from "express";
 import prisma from "../prisma/client";
 // 자산 타입 전체 조회
 export const getAllAssetTypes = async (req: Request, res: Response) => {
-  // #swagger.tags = ["asset type"]
-  const { workspace_id } = req.params;
+  const { workspaceId } = req.params;
   try {
     const assetTypes = await prisma.assetType.findMany({
       where: {
-        workspace_id,
+        workspace_id: workspaceId,
       },
     });
-    res.json(assetTypes);
+    const defaultAssetTypes = await prisma.assetType.findMany({
+      where: {
+        workspace_id: "default",
+      },
+    });
+
+    res.json([...assetTypes, ...defaultAssetTypes]);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch asset types" });
+    res.status(500).json({ message: "Failed to fetch asset types", error });
   }
 };
 
 // 자산 타입 생성
 export const createAssetType = async (req: Request, res: Response) => {
-  // #swagger.tags = ["asset type"]
-  const { workspace_id } = req.params;
+  const { workspaceId } = req.params;
   const { asset_type_name } = req.body;
   try {
     const assetType = await prisma.assetType.create({
       data: {
-        workspace_id,
+        workspace_id: workspaceId,
         asset_type_name,
+        is_default: workspaceId == "default",
       },
     });
     res.status(201).json(assetType);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create asset type" });
+    res.status(500).json({ message: "Failed to create asset type", error });
   }
 };
 
 // 자산 타입 수정
 export const updateAssetType = async (req: Request, res: Response) => {
-  // #swagger.tags = ["asset type"]
-  const { workspace_id, id } = req.params;
+  const { workspaceId, id } = req.params;
   const { asset_type_name } = req.body;
   try {
     const assetType = await prisma.assetType.update({
-      where: { workspace_id, asset_type_id: parseInt(id) },
+      where: { workspace_id: workspaceId, asset_type_id: parseInt(id) },
       data: {
         asset_type_name,
       },
     });
     res.json(assetType);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update asset type" });
+    res.status(500).json({ message: "Failed to update asset type", error });
   }
 };
 
 // 자산 타입 삭제
 export const deleteAssetType = async (req: Request, res: Response) => {
-  // #swagger.tags = ["asset type"]
-  const { id, workspace_id } = req.params;
+  const { id, workspaceId } = req.params;
   try {
     await prisma.assetType.delete({
-      where: { workspace_id, asset_type_id: parseInt(id) },
+      where: { workspace_id: workspaceId, asset_type_id: parseInt(id) },
     });
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete asset type" });
+    res.status(500).json({ message: "Failed to delete asset type", error });
   }
 };
