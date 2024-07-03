@@ -1,8 +1,8 @@
-get:
+put:
   tags:
     - asset
-  summary: Get an asset transaction by ID
-  description: Retrieve a specific asset transaction by its ID.
+  summary: update asset transaction by ID
+  description: update specific asset transaction by its ID.
   security:
     - bearerAuth: []
   parameters:
@@ -24,6 +24,28 @@ get:
       schema:
         type: integer
       description: The ID of the asset transaction
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            amount:
+              type: number
+            transaction_type:
+              type: string
+            description:
+              type: string
+            transaction_date:
+              type: string
+              format: date-time
+            exchange_rate:
+              type: number
+            shares:
+              type: number
+            price_per_share:
+              type: number
   responses:
     200:
       description: An asset transaction object.
