@@ -7,7 +7,7 @@ interface HolidayItem {
   dateKind: string;
   dateName: string;
   isHoliday: string;
-  locdate: number;
+  locate: number;
   seq: number;
 }
 
@@ -42,14 +42,19 @@ export const isTodayHoliday = async (today: Date): Promise<boolean> => {
   };
 
   const url = `${holidayApiUrl}?${new URLSearchParams(params).toString()}`;
+
   try {
     const response = await axios.get(url);
+    console;
     const data: ApiResponse = response.data.response.body.items;
 
+    if (!data.item) {
+      return false;
+    }
     if (isHolidayItemArray(data.item)) {
       for (const holiday of data.item) {
         if (
-          holiday.locdate.toString() === todayString &&
+          holiday.locate.toString() === todayString &&
           holiday.isHoliday === "Y"
         ) {
           return true;
@@ -57,7 +62,7 @@ export const isTodayHoliday = async (today: Date): Promise<boolean> => {
       }
     } else {
       if (
-        data.item.locdate.toString() === todayString &&
+        data.item.locate.toString() === todayString &&
         data.item.isHoliday === "Y"
       ) {
         return true;

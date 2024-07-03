@@ -193,48 +193,48 @@ Budget:
 ExchangeRateResponse:
   type: object
   properties:
-    RESULT:
+    result:
       type: integer
       description: 조회 결과
       enum: [1, 2, 3, 4]
       example: 1
-    CUR_UNIT:
+    cur_unit:
       type: string
       description: 통화코드
       example: USD
-    CUR_NM:
+    cur_nm:
       type: string
       description: 국가/통화명
       example: United States Dollar
-    TTB:
+    ttb:
       type: string
       description: 전신환(송금) 받으실때
       example: 1110.50
-    TTS:
+    tts:
       type: string
       description: 전신환(송금) 보내실때
       example: 1120.50
-    DEAL_BAS_R:
+    deal_bas_r:
       type: string
       description: 매매 기준율
       example: 1115.50
-    BKPR:
+    bkpr:
       type: string
       description: 장부가격
       example: 1113.00
-    YY_EFEE_R:
+    yy_efee_r:
       type: string
       description: 년환가료율
       example: 1114.50
-    TEN_DD_EFEE_R:
+    ten_dd_efee_r:
       type: string
       description: 10일환가료율
       example: 1115.00
-    KFTC_DEAL_BAS_R:
+    kftc_deal_bas_r:
       type: string
       description: 서울외국환중개 매매기준율
       example: 1115.20
-    KFTC_BKPR:
+    kftc_bkpr:
       type: string
       description: 서울외국환중개 장부가격
       example: 1113.20

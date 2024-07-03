@@ -7,17 +7,11 @@ import {
   isBusinessDay,
   isBefore11AM,
 } from "../utils/dateUtils";
-import { logger } from "express-winston";
 
 dotenv.config();
 
 const apiCache = new NodeCache({ stdTTL: 3600 });
 const exchangeRateApiUrl = process.env.EXCHANGE_RATE_API_URL || "";
-
-const https = require("https");
-const agent = new https.Agent({
-  rejectUnauthorized: false,
-});
 
 const fetchExchangeRateFromApi = async (date: string) => {
   const params = {
@@ -29,7 +23,9 @@ const fetchExchangeRateFromApi = async (date: string) => {
   try {
     const response = await axios.get(
       `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`,
-      { httpsAgent: agent, maxRedirects: 1 }
+      {
+        httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
+      }
     );
 
     return response.data;
