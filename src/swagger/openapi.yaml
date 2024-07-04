@@ -20,6 +20,8 @@ paths:
     $ref: "./paths/assets.yaml"
   /{workspaceId}/assets/{id}:
     $ref: "./paths/asset.yaml"
+  /{workspaceId}/assets/{assetId}/transactions:
+    $ref: "./paths/assetTransactions.yaml"
   /{workspaceId}/assets/{assetId}/transactions/{id}:
     $ref: "./paths/assetTransaction.yaml"
   /{workspaceId}/assets/monthlyTrend:

@@ -1,0 +1,35 @@
+post:
+  tags:
+    - asset
+  summary: Create a new asset transaction
+  description: Create a new asset transaction for the specified asset
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+    - name: assetId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the asset
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yaml#/components/schemas/AssetTransaction"
+  responses:
+    201:
+      description: Asset Transaction created successfully
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AssetTransaction"
+    500:
+      description: Failed to create asset transaction.

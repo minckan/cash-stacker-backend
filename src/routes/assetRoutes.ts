@@ -10,6 +10,7 @@ import {
   updateAsset,
 } from "../controllers/assetController/assetsContoller";
 import {
+  createAssetTransaction,
   deleteAssetTransaction,
   updateAssetTransaction,
 } from "../controllers/assetController/assetTransactionContollers";
@@ -27,6 +28,12 @@ router.put("/:id", authenticateToken, updateAsset);
 // 자산삭제
 router.delete("/:id", authenticateToken, deleteAsset);
 // ----------------------------------------------------------------
+// 특정 자산의 거래내역 추가
+router.post(
+  "/:assetId/transactions",
+  authenticateToken,
+  createAssetTransaction
+);
 // 특정자산의 거래내역 수정
 router.put(
   "/:assetId/transactions/:id",
