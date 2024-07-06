@@ -44,7 +44,11 @@ const getMonthlyTransactionInfo = async ({
           gte: startDate,
           lt: endDate,
         },
+        payment_method: {
+          not: null,
+        },
       },
+
       _sum: {
         amount: true,
       },
