@@ -18,15 +18,6 @@ export const createTransaction = async (
     payment_method,
   } = req.body;
   try {
-    console.log({
-      workspace_id: workspaceId,
-      category_id: parseInt(category_id),
-      amount: parseFloat(amount),
-      transaction_type,
-      description: description ?? "",
-      transaction_date: new Date(transaction_date),
-      payment_method: payment_method,
-    });
     const transaction = await prisma.transaction.create({
       data: {
         workspace_id: workspaceId,
@@ -37,7 +28,11 @@ export const createTransaction = async (
         transaction_date: new Date(transaction_date),
         payment_method: payment_method,
       },
+      include: {
+        category: true,
+      },
     });
+
     res.status(201).json(transaction);
   } catch (error) {
     res.status(500).json({ message: "Failed to create transaction", error });
@@ -73,6 +68,9 @@ export const updateTransaction = async (
         transaction_date: transaction_date
           ? new Date(transaction_date)
           : original.transaction_date,
+      },
+      include: {
+        category: true,
       },
     });
     res.json(transaction);
