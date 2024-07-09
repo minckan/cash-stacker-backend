@@ -50,7 +50,7 @@ export const isTodayHoliday = async (today: Date): Promise<boolean> => {
 
   try {
     const response = await axios.get(url, { httpsAgent });
-    console;
+
     const data: ApiResponse = response.data.response.body.items;
 
     if (!data.item) {
