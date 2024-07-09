@@ -7,6 +7,7 @@ import {
   isBusinessDay,
   isBefore11AM,
 } from "../utils/dateUtils";
+import https from "https";
 
 dotenv.config();
 
@@ -22,10 +23,7 @@ const fetchExchangeRateFromApi = async (date: string) => {
 
   try {
     const response = await axios.get(
-      `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`,
-      {
-        httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
-      }
+      `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`
     );
 
     return response.data;

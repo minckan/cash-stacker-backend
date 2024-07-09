@@ -1,5 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
+import https from "https";
 
 dotenv.config();
 
@@ -27,6 +28,10 @@ const isHolidayItemArray = (item: any): item is HolidayItem[] => {
   return Array.isArray(item);
 };
 
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 export const isTodayHoliday = async (today: Date): Promise<boolean> => {
   const todayString = getTodayString(today);
   const year = `${today.getFullYear()}`;
@@ -44,7 +49,7 @@ export const isTodayHoliday = async (today: Date): Promise<boolean> => {
   const url = `${holidayApiUrl}?${new URLSearchParams(params).toString()}`;
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, { httpsAgent });
     console;
     const data: ApiResponse = response.data.response.body.items;
 
