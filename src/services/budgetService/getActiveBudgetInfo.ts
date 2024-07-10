@@ -1,5 +1,6 @@
 import { Budget } from "@prisma/client";
 import prisma from "../../prisma/client";
+import { isTodayInBudgetPeriod } from "../../utils/budgetUtil";
 
 interface ExpendableBudgetType {
   expendableBudget: number;
@@ -15,7 +16,7 @@ export const getActiveBudgetInfo = async (): Promise<Budget | null> => {
   });
 
   if (budget) {
-    if (!isTodayInBudgetPeriod(budget)) {
+    if (!isTodayInBudgetPeriod(budget.start_date, budget.end_date)) {
       await prisma.budget.update({
         where: { budget_id: budget.budget_id },
         data: {
@@ -58,17 +59,4 @@ export const getCurrentExpendableBudget = async (
     expendableBudget,
     percentage,
   };
-};
-
-const isTodayInBudgetPeriod = (budget: Budget) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const start = new Date(budget.start_date);
-  const end = new Date(budget.end_date);
-
-  start.setHours(0, 0, 0, 0);
-  end.setHours(0, 0, 0, 0);
-
-  return today >= start && today <= end;
 };

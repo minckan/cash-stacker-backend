@@ -4,6 +4,7 @@ import {
   getActiveBudgetInfo,
   getCurrentExpendableBudget,
 } from "../services/budgetService/getActiveBudgetInfo";
+import { isTodayInBudgetPeriod } from "../utils/budgetUtil";
 
 // 활성중인 예산 조회
 export const getAllBudgets = async (
@@ -90,6 +91,13 @@ export const updateBudget = async (
 
   try {
     if (Boolean(isActive)) {
+      // 날짜가 활성 가능한 날짜인지 체크
+      if (!isTodayInBudgetPeriod(start_date, end_date)) {
+        res.status(422).json({
+          message: "현재 기간이 예산 설정 기간에 포함되어 있지 않습니다.",
+        });
+      }
+
       // 기존 활성화된 예산 비활성화
       await prisma.budget.updateMany({
         where: {
@@ -107,8 +115,6 @@ export const updateBudget = async (
         budget_id: parseInt(id),
       },
     });
-
-    console.log(original);
 
     // 예산 수정
     const budget = await prisma.budget.update({
