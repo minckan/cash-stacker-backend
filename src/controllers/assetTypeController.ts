@@ -24,12 +24,13 @@ export const getAllAssetTypes = async (req: Request, res: Response) => {
 // 자산 타입 생성
 export const createAssetType = async (req: Request, res: Response) => {
   const { workspaceId } = req.params;
-  const { asset_type_name } = req.body;
+  const { asset_type_name, is_foreign_asset_type } = req.body;
   try {
     const assetType = await prisma.assetType.create({
       data: {
         workspace_id: workspaceId,
         asset_type_name,
+        is_foreign_asset_type,
         is_default: workspaceId == "default",
       },
     });

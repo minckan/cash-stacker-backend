@@ -90,6 +90,8 @@ AssetType:
       type: string
     is_default:
       type: boolean
+    is_foreign_asset_type:
+      type: boolean
 
 Asset:
   type: object

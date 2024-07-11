@@ -67,10 +67,11 @@ model TransactionCategory {
 }
 
 model AssetType {
-  asset_type_id   Int      @id @default(autoincrement())
-  workspace_id    String
-  asset_type_name String
-  is_default      Boolean? @default(false)
+  asset_type_id         Int      @id @default(autoincrement())
+  workspace_id          String
+  asset_type_name       String
+  is_foreign_asset_type Boolean? @default(true)
+  is_default            Boolean? @default(false)
 
   @@index([workspace_id])
 }
