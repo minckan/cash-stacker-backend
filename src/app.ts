@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes";
 import workspaceRoutes from "./routes/workspaceRoutes";
 import financeTrackerRoutes from "./routes/financeTrackerRoutes";
 import assetTypesRoutes from "./routes/assetTypeRoutes";
+import holidayRoutes from "./routes/holidayRoutes";
 import financeTrackerCategoryRoutes from "./routes/financeTrackerCategoryRoutes";
 import budgetRoutes from "./routes/budgetRoutes";
 import invitationRoutes from "./routes/invitationRoutes";
@@ -49,6 +50,7 @@ app.use(
 
 app.use("/api", exchangeRateRoutes);
 app.use("/api", stockPriceRoutes);
+app.use("/api", holidayRoutes);
 
 // 유저
 app.use("/users", userRoutes);

@@ -131,3 +131,12 @@ model Budget {
   created_at   DateTime @default(now())
   isActive     Boolean
 }
+
+model Holiday {
+  id        Int    @id @default(autoincrement())
+  dateKind  String
+  dateName  String
+  isHoliday String
+  locdate   Int
+  seq       Int
+}

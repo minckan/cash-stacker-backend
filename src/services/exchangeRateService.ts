@@ -1,18 +1,22 @@
 import dotenv from "dotenv";
 import axios from "axios";
 import NodeCache from "node-cache";
+import https from "https";
 import {
   getPreviousBusinessDay,
   getFormattedDate,
   isBusinessDay,
   isBefore11AM,
 } from "../utils/dateUtils";
-import https from "https";
 
 dotenv.config();
 
 const apiCache = new NodeCache({ stdTTL: 3600 });
 const exchangeRateApiUrl = process.env.EXCHANGE_RATE_API_URL || "";
+
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false, // 인증서 검증 무시
+});
 
 const fetchExchangeRateFromApi = async (date: string) => {
   const params = {
@@ -22,16 +26,20 @@ const fetchExchangeRateFromApi = async (date: string) => {
   };
 
   try {
-    const response = await axios.get(
+    console.log(
       `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`
+    );
+    const response = await axios.get(
+      `${exchangeRateApiUrl}?${new URLSearchParams(params).toString()}`,
+      {
+        httpsAgent,
+        maxRedirects: 5, // 리다이렉션 자동 추적 비활성화
+      }
     );
 
     return response.data;
   } catch (error) {
-    console.log("[ERROR in fetchExchangeRateFromApi] ", error);
-    console.log("[ERROR in fetchExchangeRateFromApi] ", error.code);
-
-    throw new Error(error);
+    throw new Error(`[fetchExchangeRateFromApi] ${error}`);
   }
 };
 
@@ -57,6 +65,6 @@ export const getExchangeRate = async () => {
     apiCache.set(cacheKey, data);
     return data;
   } catch (error) {
-    throw new Error(error);
+    throw new Error(`[getExchangeRate] ${error}`);
   }
 };

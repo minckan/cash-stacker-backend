@@ -14,12 +14,16 @@ export const isBefore11AM = (date: Date): boolean => {
 };
 
 export const getPreviousBusinessDay = async (date: Date): Promise<Date> => {
-  let prevBusinessDay = subDays(date, 1);
+  try {
+    let prevBusinessDay = subDays(date, 1);
 
-  while (!(await isBusinessDay(prevBusinessDay))) {
-    prevBusinessDay = subDays(prevBusinessDay, 1);
+    while (!(await isBusinessDay(prevBusinessDay))) {
+      prevBusinessDay = subDays(prevBusinessDay, 1);
+    }
+    return prevBusinessDay;
+  } catch (error) {
+    throw new Error(`[getPreviousBusinessDay] ${error.message}`);
   }
-  return prevBusinessDay;
 };
 
 export const getFormattedDate = (date: Date): string => {
@@ -30,8 +34,12 @@ export const getFormattedDate = (date: Date): string => {
 };
 
 export const isBusinessDay = async (date: Date): Promise<boolean> => {
-  const day = date.getDay();
-  const holiday = await isTodayHoliday(date);
+  try {
+    const day = date.getDay();
+    const holiday = await isTodayHoliday(date);
 
-  return day !== 0 && day !== 6 && !holiday; // Sunday is 0, Saturday is 6
+    return day !== 0 && day !== 6 && !holiday; // Sunday is 0, Saturday is 6
+  } catch (error) {
+    throw new Error(`[Check Business Day] ${error.message}`);
+  }
 };
