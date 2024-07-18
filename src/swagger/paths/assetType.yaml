@@ -28,6 +28,8 @@ put:
             asset_type_name:
               type: string
               description: The name of the asset type
+            is_foreign_asset_type:
+              type: boolean
   responses:
     200:
       description: Asset type updated successfully.

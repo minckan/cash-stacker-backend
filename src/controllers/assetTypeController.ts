@@ -43,17 +43,25 @@ export const createAssetType = async (req: Request, res: Response) => {
 // 자산 타입 수정
 export const updateAssetType = async (req: Request, res: Response) => {
   const { workspaceId, id } = req.params;
-  const { asset_type_name } = req.body;
+  const { asset_type_name, is_foreign_asset_type } = req.body;
   try {
+    if (workspaceId === "default") {
+      throw new Error(
+        "Invalid workspace ID : Default 데이터는 수정할 수 없습니다."
+      );
+    }
     const assetType = await prisma.assetType.update({
       where: { workspace_id: workspaceId, asset_type_id: parseInt(id) },
       data: {
         asset_type_name,
+        is_foreign_asset_type,
       },
     });
     res.json(assetType);
   } catch (error) {
-    res.status(500).json({ message: "Failed to update asset type", error });
+    res
+      .status(500)
+      .json({ message: error.message || "Failed to update asset type", error });
   }
 };
 
