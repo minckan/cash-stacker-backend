@@ -1,39 +1,51 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { getAllAssetTransactionsAsType } from "../../services/assetTransactionService/getAllAssetTransactionsByType";
+
+/// 특정 자산의 거래내역을 조회
+export const getAllAssetTransactions = async (req: Request, res: Response) => {
+  const { assetID } = req.params;
+
+  try {
+    const assetAllTransactions = getAllAssetTransactionsAsType(assetID);
+
+    res.status(201).send();
+  } catch (error) {
+    res.status(500).send({ message: "[ERROR] getAllAssetTransactions", error });
+  }
+};
 
 /// 특정 자산의 거래내역을 생성
 export const createAssetTransaction = async (req: Request, res: Response) => {
   const { assetID } = req.params;
 
   const {
-    amount,
     transaction_type,
     description,
     transaction_date,
     exchange_rate,
     shares,
     price_per_share,
-    currency,
+    current_price_per_share,
   } = req.body;
 
   try {
     const assetTransaction = await prisma.assetTransaction.create({
       data: {
         asset_id: Number(assetID),
-        currency,
-        amount,
         transaction_type,
         description,
         transaction_date,
         exchange_rate,
         shares,
         price_per_share,
+        current_price_per_share,
       },
     });
     res.status(201).send(assetTransaction);
   } catch (error) {
-    res.status(500).send({ message: "Failed to create user", error });
+    res.status(500).send({ message: "[ERROR] createAssetTransaction", error });
   }
 };
 
@@ -41,13 +53,13 @@ export const createAssetTransaction = async (req: Request, res: Response) => {
 export const updateAssetTransaction = async (req: Request, res: Response) => {
   const { id, assetId } = req.params;
   const {
-    amount,
     transaction_type,
     description,
     transaction_date,
     exchange_rate,
     shares,
     price_per_share,
+    current_price_per_share,
   } = req.body;
 
   try {
@@ -57,18 +69,18 @@ export const updateAssetTransaction = async (req: Request, res: Response) => {
         transaction_id: Number(id),
       },
       data: {
-        amount,
         transaction_type,
         description,
         transaction_date,
         exchange_rate,
         shares,
         price_per_share,
+        current_price_per_share,
       },
     });
     res.status(201).send(updatedAssetTr);
   } catch (error) {
-    res.status(500).send({ message: "Failed to create user", error });
+    res.status(500).send({ message: "[ERROR] updateAssetTransaction", error });
   }
 };
 
@@ -87,6 +99,6 @@ export const deleteAssetTransaction = async (req: Request, res: Response) => {
     });
     res.status(201).send({ result: "deleted successfully" });
   } catch (error) {
-    res.status(500).send({ message: "Failed to create user", error });
+    res.status(500).send({ message: "[ERROR] deleteAssetTransaction", error });
   }
 };
