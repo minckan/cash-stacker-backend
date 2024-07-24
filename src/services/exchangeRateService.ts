@@ -16,6 +16,7 @@ const exchangeRateApiUrl = process.env.EXCHANGE_RATE_API_URL || "";
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false, // 인증서 검증 무시
+  keepAlive: true,
 });
 
 const fetchExchangeRateFromApi = async (date: string) => {

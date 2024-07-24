@@ -6,8 +6,6 @@ export const getMonthlyAssetTotals = async (req: Request, res: Response) => {
   // #swagger.tags = ["asset"]
   const { workspaceId } = req.body;
 
-  console.log("🍎 body: ", req.body);
-
   if (!workspaceId) {
     return res.status(400).send("workspaceId is required");
   }

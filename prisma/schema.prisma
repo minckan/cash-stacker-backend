@@ -89,19 +89,23 @@ model Asset {
   @@index([workspace_id])
 }
 
+enum TransactionType {
+  SELL
+  BUY
+}
+
 model AssetTransaction {
-  transaction_id   Int                  @id @default(autoincrement())
-  created_at       DateTime             @default(now())
-  asset_id         Int
-  transaction_type String
-  description      String
-  transaction_date DateTime
-  currency         String
-  amount           Float?
-  exchange_rate    Float?
-  shares           Int?
-  price_per_share  Float?
-  assets           AssetToTransaction[]
+  transaction_id          Int                  @id @default(autoincrement())
+  created_at              DateTime             @default(now())
+  asset_id                Int
+  transaction_type        TransactionType
+  description             String?
+  transaction_date        DateTime
+  exchange_rate           Float?
+  shares                  Int?
+  price_per_share         Float?
+  current_price_per_share Float?
+  assets                  AssetToTransaction[]
 }
 
 model AssetToTransaction {

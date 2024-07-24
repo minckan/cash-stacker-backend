@@ -144,6 +144,39 @@ AssetTransaction:
       type: number
       format: float
 
+AssetTransactionRequest:
+  type: object
+  properties:
+    asset_id:
+      type: integer
+      nullable: true
+    transaction_type:
+      type: string
+      enum:
+        - sell
+        - buy
+    description:
+      type: string
+      nullable: true
+    transaction_date:
+      type: string
+      format: date-time
+    exchange_rate:
+      type: number
+      format: float
+      nullable: true
+    shares:
+      type: integer
+      nullable: true
+    price_per_share:
+      type: number
+      format: float
+      nullable: true
+    current_price_per_share:
+      type: number
+      format: float
+      nullable: true
+
 AssetToTransaction:
   type: object
   properties:

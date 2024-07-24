@@ -23,7 +23,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: "../openapi.yaml#/components/schemas/AssetTransaction"
+          $ref: "../openapi.yaml#/components/schemas/AssetTransactionRequest"
   responses:
     201:
       description: Asset Transaction created successfully
