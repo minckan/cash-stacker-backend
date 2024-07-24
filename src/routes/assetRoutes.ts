@@ -1,4 +1,4 @@
-import { Router } from "express";
+import express from "express";
 
 import { getMonthlyAssetTotals } from "../controllers/assetController/monthlyAssetTotalsController";
 import { authenticateToken } from "../middleware/authMiddleware";
@@ -15,7 +15,7 @@ import {
   updateAssetTransaction,
 } from "../controllers/assetController/assetTransactionContollers";
 
-const router = Router();
+const router = express.Router({ mergeParams: true });
 
 // 자산 생성
 router.post("/", authenticateToken, createAsset);
