@@ -10,6 +10,7 @@ import holidayRoutes from "./routes/holidayRoutes";
 import financeTrackerCategoryRoutes from "./routes/financeTrackerCategoryRoutes";
 import budgetRoutes from "./routes/budgetRoutes";
 import invitationRoutes from "./routes/invitationRoutes";
+import portfolioRoutes from "./routes/portfolioRoutes";
 import winston from "winston";
 import expressWinston from "express-winston";
 import swaggerUi from "swagger-ui-express";
@@ -68,5 +69,7 @@ app.use("/:workspaceId/finance/category", financeTrackerCategoryRoutes);
 app.use("/:workspaceId/budget", budgetRoutes);
 // 초대
 app.use("/:workspaceId/invitation", invitationRoutes);
+// 포트폴리오
+app.use("/:workspaceId/portfolio", portfolioRoutes);
 
 export default app;

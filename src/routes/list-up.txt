@@ -1,0 +1,2 @@
+- GET /{workspaceId}/portfolio 포트폴리오 조회
+: 총 자산 볼륨, 보유 자산별 비율, 보유 자산 테이블용 데이터
