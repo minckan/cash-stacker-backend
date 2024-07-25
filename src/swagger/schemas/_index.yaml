@@ -104,9 +104,6 @@ Asset:
       type: integer
     asset_name:
       type: string
-    balance:
-      type: number
-      format: float
     created_at:
       type: string
       format: date-time
@@ -143,6 +140,9 @@ AssetTransaction:
     price_per_share:
       type: number
       format: float
+    balance:
+      type: number
+      format: float
 
 AssetTransactionRequest:
   type: object
@@ -173,6 +173,10 @@ AssetTransactionRequest:
       format: float
       nullable: true
     current_price_per_share:
+      type: number
+      format: float
+      nullable: true
+    balance:
       type: number
       format: float
       nullable: true

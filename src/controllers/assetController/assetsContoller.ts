@@ -5,50 +5,38 @@ import { Prisma } from "@prisma/client";
 /// 자산 생성
 export const createAsset = async (req: Request, res: Response) => {
   const { workspaceId } = req.params;
-  const { asset_type_id, asset_name, balance, transactions, currency_code } =
-    req.body;
+  const { asset_type_id, asset_name, transactions, currency_code } = req.body;
 
   try {
     // 트랜잭션 시작
     const result = await prisma.$transaction(
       async (prisma: Prisma.TransactionClient) => {
-        console.log({
-          workspace_id: workspaceId,
-          asset_type_id,
-          asset_name,
-          balance,
-          currency_code,
-          transactions,
-        });
         // 새로운 Asset 생성
         const asset = await prisma.asset.create({
           data: {
             workspace_id: workspaceId,
             asset_type_id,
             asset_name,
-            balance,
             currency_code,
           },
         });
 
         // 자산과 연결된 거래내역 생성
-        if (transactions && transactions.length > 0) {
-          for (const transaction of transactions) {
-            await prisma.assetTransaction.create({
-              data: {
-                ...transaction,
-                asset_id: asset.asset_id,
-              },
-            });
+        if (transactions) {
+          const tr = await prisma.assetTransaction.create({
+            data: {
+              ...transactions,
+              asset_id: asset.asset_id,
+            },
+          });
 
-            // 중간 테이블에 데이터 추가
-            await prisma.assetToTransaction.create({
-              data: {
-                asset_id: asset.asset_id,
-                transaction_id: transaction.transaction_id,
-              },
-            });
-          }
+          // 중간 테이블에 데이터 추가
+          await prisma.assetToTransaction.create({
+            data: {
+              asset_id: asset.asset_id,
+              transaction_id: tr.transaction_id,
+            },
+          });
         }
 
         return asset;

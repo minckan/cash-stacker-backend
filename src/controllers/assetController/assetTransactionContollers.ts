@@ -28,6 +28,7 @@ export const createAssetTransaction = async (req: Request, res: Response) => {
     shares,
     price_per_share,
     current_price_per_share,
+    balance,
   } = req.body;
 
   try {
@@ -41,6 +42,7 @@ export const createAssetTransaction = async (req: Request, res: Response) => {
         shares,
         price_per_share,
         current_price_per_share,
+        balance,
       },
     });
     res.status(201).send(assetTransaction);
@@ -60,6 +62,7 @@ export const updateAssetTransaction = async (req: Request, res: Response) => {
     shares,
     price_per_share,
     current_price_per_share,
+    balance,
   } = req.body;
 
   try {
@@ -76,6 +79,7 @@ export const updateAssetTransaction = async (req: Request, res: Response) => {
         shares,
         price_per_share,
         current_price_per_share,
+        balance,
       },
     });
     res.status(201).send(updatedAssetTr);
