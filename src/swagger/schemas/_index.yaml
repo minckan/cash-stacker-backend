@@ -277,3 +277,93 @@ ExchangeRateResponse:
       type: string
       description: 서울외국환중개 장부가격
       example: 1113.20
+
+AssetInfo:
+  type: object
+  properties:
+    id:
+      type: number
+      description: 자산 아이디
+    name:
+      type: string
+      description: 자산 이름
+    amount:
+      type: number
+      description: 수량
+    ratio:
+      type: number
+      description: 비율(비중)
+    initialPurchaseDate:
+      type: string
+      format: date
+      description: 최초 편입일
+    buyingExchangeRate:
+      type: number
+      description: 매입 환율
+      nullable: true
+    totalBuyingAmountKrw:
+      type: number
+      description: 원화 투자 총액
+      nullable: true
+    buyingSinglePriceKrw:
+      type: number
+      description: 원화 평균 매입가
+    currentSinglePriceKrw:
+      type: number
+      description: 원화 가장 최근 입력받은 현재가
+    totalEvaluationAmountKrw:
+      type: number
+      description: 원화 현재가 총금액
+    profitLossRateKrw:
+      type: number
+      description: 원화 원화환산 수익률
+    totalCurrentAmountKrw:
+      type: number
+      description: 원화 현재가 총 평가액
+      nullable: true
+    totalBuyingAmountForeign:
+      type: number
+      description: 외화 투자원금 총액
+      nullable: true
+    buyingSinglePriceForeign:
+      type: number
+      description: 외화 평균 매입가
+    currentSinglePriceForeign:
+      type: number
+      description: 외화 가장 최근 입력 받은 현재가
+    totalEvaluationAmountForeign:
+      type: number
+      description: 외화 현재가 총금액
+    profitLossRateForeign:
+      type: number
+      description: 외화 외화 수익률 (외화 차제로 얼마나 수익이 있는지)
+    totalCurrentAmountForeign:
+      type: number
+      description: 외화 현재가 총 평가액
+      nullable: true
+
+Portfolio:
+  type: object
+  properties:
+    totalAmount:
+      type: number
+      description: Total amount of all assets
+    ratios:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          total_assets:
+            type: number
+            description: Total assets in the given category
+          asset_type_name:
+            type: string
+            description: Name of the asset type
+      description: Ratios of different asset types
+      nullable: true
+    rows:
+      type: array
+      items:
+        $ref: "../openapi.yaml#/components/schemas/AssetInfo"
+      description: List of asset details
+      nullable: true

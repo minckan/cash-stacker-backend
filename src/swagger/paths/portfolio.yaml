@@ -1,0 +1,21 @@
+get:
+  summary: Get portfolio details
+  description: Retrieve portfolio details based on the provided workspace ID
+  parameters:
+    - in: path
+      name: workspaceId
+      schema:
+        type: string
+      required: true
+      description: The ID of the workspace
+  responses:
+    "200":
+      description: A portfolio object
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/Portfolio"
+    "400":
+      description: Invalid workspace ID supplied
+    "404":
+      description: Portfolio not found
