@@ -44,10 +44,14 @@ export const fetchPortfolio = async (
   // 자산별 종합 정보
   const assetDetails = await getAssetDetails(workspaceId);
 
+  console.log(assetDetails);
   return {
     totalAmount: totalAssetAmount,
     ratios: ratioValue,
-    rows: assetDetails,
+    rows: assetDetails.map((detail) => ({
+      ...detail,
+      amount: Number(detail.amount),
+    })),
   };
 };
 
@@ -121,7 +125,7 @@ const getAssetDetails = async (workspaceId: string) => {
       ELSE a.asset_name 
     END AS name,
     a.asset_id AS id,
-    SUM(at.shares) AS amount,
+    CAST(SUM(at.shares) AS DECIMAL(10, 2)) AS amount,
     (SUM(at.shares * at.current_price_per_share) / total.total_assets) * 100 AS ratio,
     MIN(at.transaction_date) AS initialPurchaseDate,
     MAX(at.exchange_rate) AS buyingExchangeRate,
