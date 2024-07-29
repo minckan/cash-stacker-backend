@@ -308,15 +308,19 @@ AssetInfo:
     buyingSinglePriceKrw:
       type: number
       description: 원화 평균 매입가
+      nullable: true
     currentSinglePriceKrw:
       type: number
       description: 원화 가장 최근 입력받은 현재가
+      nullable: true
     totalEvaluationAmountKrw:
       type: number
       description: 원화 현재가 총금액
+      nullable: true
     profitLossRateKrw:
       type: number
       description: 원화 원화환산 수익률
+      nullable: true
     totalCurrentAmountKrw:
       type: number
       description: 원화 현재가 총 평가액
@@ -328,15 +332,19 @@ AssetInfo:
     buyingSinglePriceForeign:
       type: number
       description: 외화 평균 매입가
+      nullable: true
     currentSinglePriceForeign:
       type: number
       description: 외화 가장 최근 입력 받은 현재가
+      nullable: true
     totalEvaluationAmountForeign:
       type: number
       description: 외화 현재가 총금액
+      nullable: true
     profitLossRateForeign:
       type: number
       description: 외화 외화 수익률 (외화 차제로 얼마나 수익이 있는지)
+      nullable: true
     totalCurrentAmountForeign:
       type: number
       description: 외화 현재가 총 평가액

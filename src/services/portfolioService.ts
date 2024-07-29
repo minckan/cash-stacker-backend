@@ -10,18 +10,18 @@ interface AssetInfo {
 
   // [원화] 관련 필드
   totalBuyingAmountKrw?: number; // [원화] 투자 총액 (optional)
-  buyingSinglePriceKrw: number; // [원화] 평균 매입가
-  currentSinglePriceKrw: number; // [원화] 가장 최근 입력받은 현재가
-  totalEvaluationAmountKrw: number; // [원화] 현재가 총금액
-  profitLossRateKrw: number; // [원화] 원화환산 수익률
+  buyingSinglePriceKrw?: number; // [원화] 평균 매입가
+  currentSinglePriceKrw?: number; // [원화] 가장 최근 입력받은 현재가
+  totalEvaluationAmountKrw?: number; // [원화] 현재가 총금액
+  profitLossRateKrw?: number; // [원화] 원화환산 수익률
   totalCurrentAmountKrw?: number; // [원화] 현재가 총 평가액 (optional)
 
   // [외화] 관련 필드
   totalBuyingAmountForeign?: number; // [외화] 투자원금 총액 (optional)
-  buyingSinglePriceForeign: number; // [외화] 평균 매입가
-  currentSinglePriceForeign: number; // [외화] 가장 최근 입력 받은 현재가
-  totalEvaluationAmountForeign: number; // [외화] 현재가 총금액
-  profitLossRateForeign: number; // [외화] 외화 수익률 (외화 차제로 얼마나 수익이 있는지)
+  buyingSinglePriceForeign?: number; // [외화] 평균 매입가
+  currentSinglePriceForeign?: number; // [외화] 가장 최근 입력 받은 현재가
+  totalEvaluationAmountForeign?: number; // [외화] 현재가 총금액
+  profitLossRateForeign?: number; // [외화] 외화 수익률 (외화 차제로 얼마나 수익이 있는지)
   totalCurrentAmountForeign?: number; // [외화] 현재가 총 평가액 (optional)
 }
 
@@ -126,25 +126,88 @@ const getAssetDetails = async (workspaceId: string) => {
     END AS name,
     a.asset_id AS id,
     CAST(SUM(at.shares) AS DECIMAL(10, 2)) AS amount,
-    (SUM(at.shares * at.current_price_per_share) / total.total_assets) * 100 AS ratio,
+    ( SUM(
+        CASE
+          WHEN atype.asset_type_id = 5 THEN at.balance
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN at.balance * COALESCE(at.exchange_rate, 1)
+          WHEN atype.is_foreign_asset_type = true THEN at.shares * at.price_per_share * COALESCE(at.exchange_rate, 1)
+          ELSE at.shares * at.price_per_share
+        END
+      ) / total.total_assets) * 100 AS ratio,
     MIN(at.transaction_date) AS initialPurchaseDate,
     MAX(at.exchange_rate) AS buyingExchangeRate,
 
     -- [원화] 관련 필드
-    SUM(at.balance) AS totalBuyingAmountKrw,
-    AVG(at.price_per_share) AS buyingSinglePriceKrw,
-    AVG(at.current_price_per_share) AS currentSinglePriceKrw,
-    SUM(at.shares * at.current_price_per_share) AS totalEvaluationAmountKrw,
-    (SUM(at.shares * at.current_price_per_share) - SUM(at.shares * at.price_per_share)) / SUM(at.shares * at.price_per_share) * 100 AS profitLossRateKrw,
-    SUM(at.shares * at.current_price_per_share) AS totalCurrentAmountKrw,
+    SUM(
+        CASE
+          WHEN atype.asset_type_id = 5 THEN at.balance
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN at.balance * COALESCE(at.exchange_rate, 1)
+          WHEN atype.is_foreign_asset_type = true THEN at.shares * at.price_per_share * COALESCE(at.exchange_rate, 1)
+          ELSE at.shares * at.price_per_share
+        END
+      ) AS totalBuyingAmountKrw,
+    AVG(
+        CASE
+          WHEN atype.asset_type_id = 5 THEN NULL
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
+          WHEN atype.is_foreign_asset_type = true THEN at.price_per_share * COALESCE(at.exchange_rate, 1)
+          ELSE at.price_per_share
+        END
+      ) AS buyingSinglePriceKrw,
+    AVG(
+        CASE
+          WHEN atype.asset_type_id = 5 THEN NULL
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
+          WHEN atype.is_foreign_asset_type = true THEN at.current_price_per_share * COALESCE(at.exchange_rate, 1)
+          ELSE at.current_price_per_share
+        END
+      ) AS currentSinglePriceKrw,
+    SUM(
+        CASE
+          WHEN atype.asset_type_id = 5 THEN NULL
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
+          WHEN atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)
+          ELSE at.shares * at.current_price_per_share
+        END
+      ) AS totalEvaluationAmountKrw,
+    -- 0 AS profitLossRateKrw,
+    SUM(
+        CASE
+          WHEN atype.asset_type_id = 5 THEN NULL
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
+          WHEN atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)
+          ELSE at.shares * at.current_price_per_share
+        END
+      ) AS totalCurrentAmountKrw,
 
     -- [외화] 관련 필드
-    SUM(at.balance * COALESCE(at.exchange_rate, 1)) AS totalBuyingAmountForeign,
-    AVG(at.price_per_share * COALESCE(at.exchange_rate, 1)) AS buyingSinglePriceForeign,
-    AVG(at.current_price_per_share * COALESCE(at.exchange_rate, 1)) AS currentSinglePriceForeign,
-    SUM(at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)) AS totalEvaluationAmountForeign,
-    (SUM(at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)) - SUM(at.shares * at.price_per_share * COALESCE(at.exchange_rate, 1))) / SUM(at.shares * at.price_per_share * COALESCE(at.exchange_rate, 1)) * 100 AS profitLossRateForeign,
-    SUM(at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)) AS totalCurrentAmountForeign
+    SUM(
+        CASE
+          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN at.balance
+          WHEN atype.is_foreign_asset_type = true THEN at.shares * at.price_per_share
+          ELSE NULL
+        END
+      ) AS totalBuyingAmountForeign,
+    AVG(
+        CASE
+          WHEN atype.asset_type_id NOT IN (4, 5) AND atype.is_foreign_asset_type = true THEN at.price_per_share
+          ELSE NULL
+        END
+      ) AS buyingSinglePriceForeign,
+    AVG(
+        CASE
+          WHEN atype.asset_type_id NOT IN (4, 5) AND atype.is_foreign_asset_type = true THEN at.current_price_per_share
+          ELSE NULL
+        END
+      ) AS currentSinglePriceForeign,
+    -- 0 AS totalEvaluationAmountForeign,
+    -- 0 AS profitLossRateForeign,
+    SUM(
+        CASE
+          WHEN atype.asset_type_id NOT IN (4, 5) AND atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share
+          ELSE NULL
+        END
+      ) AS totalCurrentAmountForeign
   FROM Asset a
   JOIN AssetToTransaction att ON a.asset_id = att.asset_id
   JOIN AssetTransaction at ON att.transaction_id = at.transaction_id
@@ -164,10 +227,10 @@ const getAssetDetails = async (workspaceId: string) => {
     JOIN AssetToTransaction att ON a.asset_id = att.asset_id
     JOIN AssetTransaction at ON att.transaction_id = at.transaction_id
     WHERE a.workspace_id = ${workspaceId}
-  ) as total
+  ) as total ON 1=1
   WHERE a.workspace_id = ${workspaceId}
   GROUP BY a.asset_name, a.asset_id, total.total_assets, atype.asset_type_name, atype.asset_type_id
-`;
+  `;
 
   return assetDetails;
 };
