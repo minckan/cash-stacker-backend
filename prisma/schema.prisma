@@ -72,6 +72,7 @@ model AssetType {
   asset_type_name       String
   is_foreign_asset_type Boolean? @default(true)
   is_default            Boolean? @default(false)
+  Asset                 Asset[]
 
   @@index([workspace_id])
 }
@@ -83,6 +84,7 @@ model Asset {
   asset_name    String?
   created_at    DateTime             @default(now())
   currency_code String
+  asset_type    AssetType            @relation(fields: [asset_type_id], references: [asset_type_id])
   transactions  AssetToTransaction[]
 
   @@index([workspace_id])

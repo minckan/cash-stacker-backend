@@ -3,7 +3,7 @@ import prisma from "../prisma/client";
 interface AssetInfo {
   id: number; // 자산 아이디
   name: string; // 자산 이름
-  amount: number; // 수량
+  amount?: number; // 수량
   ratio: number; // 비율(비중)
   initialPurchaseDate: Date; // 최초 편입일
   buyingExchangeRate?: number; // 매입 환율 (optional)
@@ -44,7 +44,6 @@ export const fetchPortfolio = async (
   // 자산별 종합 정보
   const assetDetails = await getAssetDetails(workspaceId);
 
-  console.log(assetDetails);
   return {
     totalAmount: totalAssetAmount,
     ratios: ratioValue,
@@ -125,7 +124,10 @@ const getAssetDetails = async (workspaceId: string) => {
       ELSE a.asset_name 
     END AS name,
     a.asset_id AS id,
-    CAST(SUM(at.shares) AS DECIMAL(10, 2)) AS amount,
+    CAST(SUM(CASE 
+      WHEN atype.asset_type_id IN (4, 5) THEN NULL
+      ELSE at.shares
+    END) AS DECIMAL(10, 2)) AS amount,
     ( SUM(
         CASE
           WHEN atype.asset_type_id = 5 THEN at.balance

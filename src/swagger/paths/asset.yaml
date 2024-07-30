@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: "../openapi.yaml#/components/schemas/Asset"
+            $ref: "../openapi.yaml#/components/schemas/AssetDetailResponseType"
     500:
       description: Failed to retrieve asset.
 

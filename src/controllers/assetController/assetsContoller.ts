@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
 import { Prisma } from "@prisma/client";
+import { getAssetDetail } from "../../services/assetService/getAssetDetail";
 
 /// 자산 생성
 export const createAsset = async (req: Request, res: Response) => {
@@ -48,29 +49,15 @@ export const createAsset = async (req: Request, res: Response) => {
   }
 };
 
-/// 자산 전체 조회
-export const getAssets = async (req: Request, res: Response) => {
-  const { workspaceId } = req.params;
-
-  try {
-    const allAssets = await prisma.asset.findMany({
-      where: { workspace_id: workspaceId },
-    });
-    res.status(201).send(allAssets);
-  } catch (error) {
-    res.status(500).send({ message: "[ERROR] getAssets", error });
-  }
-};
-
 /// 단일 자산 조회
 export const getAssetById = async (req: Request, res: Response) => {
   const { id, workspaceId } = req.params;
 
+  console.log("getAssetById", id);
   try {
-    const oneAsset = await prisma.asset.findUnique({
-      where: { workspace_id: workspaceId, asset_id: Number(id) },
-    });
-    res.status(201).send(oneAsset);
+    const assetAllTransactions = await getAssetDetail(workspaceId, id);
+
+    res.status(201).send(assetAllTransactions);
   } catch (error) {
     res.status(500).send({ message: "[ERROR] getAssetById", error });
   }

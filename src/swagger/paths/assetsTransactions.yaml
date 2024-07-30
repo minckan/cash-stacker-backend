@@ -1,0 +1,23 @@
+get:
+  tags:
+    - asset
+  summary: Get all asset transactions
+  description: Retrieve all assets for the specified workspace.
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: workspaceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The ID of the workspace
+  responses:
+    200:
+      description: A list of asset transactions.
+      content:
+        application/json:
+          schema:
+            $ref: "../openapi.yaml#/components/schemas/AllAssetsResponseType"
+    500:
+      description: Failed to retrieve assets.

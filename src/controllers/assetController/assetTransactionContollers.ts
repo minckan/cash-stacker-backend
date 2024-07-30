@@ -1,18 +1,17 @@
 import { Request, Response } from "express";
 import prisma from "../../prisma/client";
 import { Prisma } from "@prisma/client";
-import { getAllAssetTransactionsAsType } from "../../services/assetTransactionService/getAllAssetTransactionsByType";
+import { getAllAssetsTransactions } from "../../services/assetTransactionService/getAllAssetTransactions";
 
-/// 특정 자산의 거래내역을 조회
+/// 자산 전체 조회
 export const getAllAssetTransactions = async (req: Request, res: Response) => {
-  const { assetID } = req.params;
+  const { workspaceId } = req.params;
 
   try {
-    const assetAllTransactions = getAllAssetTransactionsAsType(assetID);
-
-    res.status(201).send();
+    const allAssets = await getAllAssetsTransactions(workspaceId);
+    res.status(201).send(allAssets);
   } catch (error) {
-    res.status(500).send({ message: "[ERROR] getAllAssetTransactions", error });
+    res.status(500).send({ message: "[ERROR] getAssets", error });
   }
 };
 

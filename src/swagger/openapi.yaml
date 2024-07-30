@@ -18,6 +18,8 @@ paths:
     $ref: "./paths/workspace.yaml"
   /{workspaceId}/assets:
     $ref: "./paths/assets.yaml"
+  /{workspaceId}/assets/transactions/all:
+    $ref: "./paths/assetsTransactions.yaml"
   /{workspaceId}/assets/{id}:
     $ref: "./paths/asset.yaml"
   /{workspaceId}/assets/{assetId}/transactions:

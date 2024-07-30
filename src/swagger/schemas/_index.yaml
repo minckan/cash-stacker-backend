@@ -290,6 +290,7 @@ AssetInfo:
     amount:
       type: number
       description: 수량
+      nullable: true
     ratio:
       type: number
       description: 비율(비중)
@@ -374,4 +375,79 @@ Portfolio:
       items:
         $ref: "../openapi.yaml#/components/schemas/AssetInfo"
       description: List of asset details
+      nullable: true
+
+AssetDetailResponseType:
+  type: object
+  properties:
+    assetId:
+      type: integer
+    isKrwCashAsset:
+      type: boolean
+    currencyCode:
+      type: string
+    total:
+      type: number
+    assetTypeId:
+      type: integer
+    transaction:
+      type: array
+      items:
+        $ref: "../openapi.yaml#/components/schemas/AssetTransactionResponseType"
+
+AllAssetsResponseType:
+  type: object
+  properties:
+    total:
+      type: number
+    transaction:
+      type: array
+      items:
+        $ref: "../openapi.yaml#/components/schemas/AssetTransactionResponseType"
+
+AssetTransactionResponseType:
+  type: object
+  properties:
+    transactionId:
+      type: integer
+    transactionType:
+      type: string
+      enum:
+        - sell
+        - buy
+    description:
+      type: string
+      nullable: true
+    transactionDate:
+      type: string
+      format: date-time
+    exchangeRate:
+      type: number
+      nullable: true
+    shares:
+      type: integer
+      nullable: true
+    pricePerShare:
+      type: number
+      nullable: true
+    currentPricePerShare:
+      type: number
+      nullable: true
+    balance:
+      type: number
+      nullable: true
+    currencyCode:
+      type: string
+      nullable: true
+    isForeignTr:
+      type: boolean
+      nullable: true
+    assetTypeId:
+      type: number
+      nullable: true
+    assetName:
+      type: string
+      nullable: true
+    assetId:
+      type: number
       nullable: true

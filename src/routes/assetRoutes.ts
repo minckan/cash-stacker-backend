@@ -6,10 +6,10 @@ import {
   createAsset,
   deleteAsset,
   getAssetById,
-  getAssets,
   updateAsset,
 } from "../controllers/assetController/assetsContoller";
 import {
+  getAllAssetTransactions,
   createAssetTransaction,
   deleteAssetTransaction,
   updateAssetTransaction,
@@ -19,8 +19,6 @@ const router = express.Router({ mergeParams: true });
 
 // 자산 생성
 router.post("/", authenticateToken, createAsset);
-// 자산 전체 조회
-router.get("/", authenticateToken, getAssets);
 // 자산 중 특정 자산 조회
 router.get("/:id", authenticateToken, getAssetById);
 // 자산업데이트
@@ -28,6 +26,8 @@ router.put("/:id", authenticateToken, updateAsset);
 // 자산삭제
 router.delete("/:id", authenticateToken, deleteAsset);
 // ----------------------------------------------------------------
+// 자산 거래내역 전체 조회
+router.get("/transactions/all", authenticateToken, getAllAssetTransactions);
 // 특정 자산의 거래내역 추가
 router.post(
   "/:assetId/transactions",
