@@ -287,6 +287,9 @@ AssetInfo:
     name:
       type: string
       description: 자산 이름
+    currencyCode:
+      type: string
+      description: 통화 코드
     amount:
       type: number
       description: 수량

@@ -9,6 +9,7 @@ interface TransactionResponseType {
   shares?: number;
   pricePerShare?: number;
   currentPricePerShare?: number;
+  currencyCode: string;
   balance?: number;
   isForeignTr: boolean;
   assetTypeId: number;
@@ -66,6 +67,7 @@ export const getAssetDetail = async (
         assetTypeId: asset.asset_type_id,
         assetName: asset.asset_name,
         assetId: asset.asset_id,
+        currencyCode: asset.currency_code,
       } as TransactionResponseType;
     });
 

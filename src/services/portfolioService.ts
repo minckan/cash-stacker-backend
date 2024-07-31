@@ -7,22 +7,23 @@ interface AssetInfo {
   ratio: number; // 비율(비중)
   initialPurchaseDate: Date; // 최초 편입일
   buyingExchangeRate?: number; // 매입 환율 (optional)
+  currencyCode: string;
 
   // [원화] 관련 필드
-  totalBuyingAmountKrw?: number; // [원화] 투자 총액 (optional)
+  totalBuyingAmountKrw?: number; // [원화] 매입 총 금액
   buyingSinglePriceKrw?: number; // [원화] 평균 매입가
   currentSinglePriceKrw?: number; // [원화] 가장 최근 입력받은 현재가
-  totalEvaluationAmountKrw?: number; // [원화] 현재가 총금액
-  profitLossRateKrw?: number; // [원화] 원화환산 수익률
-  totalCurrentAmountKrw?: number; // [원화] 현재가 총 평가액 (optional)
+  totalCurrentAmountKrw?: number; // [원화] 현재가 총금액
+  // totalEvaluationAmountKrw?: number; // [원화] 원화평가수익  (totalCurrentAmountKrw - totalBuyingAmountKrw)
+  // profitLossRateKrw?: number; // [원화] 수익률 (투자금 대비 totalEvaluationAmountKrw의 퍼센테이지)
 
   // [외화] 관련 필드
-  totalBuyingAmountForeign?: number; // [외화] 투자원금 총액 (optional)
+  totalBuyingAmountForeign?: number; // [외화] 매입 총 금액
   buyingSinglePriceForeign?: number; // [외화] 평균 매입가
   currentSinglePriceForeign?: number; // [외화] 가장 최근 입력 받은 현재가
-  totalEvaluationAmountForeign?: number; // [외화] 현재가 총금액
-  profitLossRateForeign?: number; // [외화] 외화 수익률 (외화 차제로 얼마나 수익이 있는지)
-  totalCurrentAmountForeign?: number; // [외화] 현재가 총 평가액 (optional)
+  totalCurrentAmountForeign?: number; // [외화] 현재가 총금액
+  // totalEvaluationAmountForeign?: number; // [외화] 외화평가수익 (totalCurrentAmountForeign - totalBuyingAmountForeign)
+  // profitLossRateForeign?: number; // [외화] 수익률 (투자금 대비 totalEvaluationAmountForeign 퍼센테이지)
 }
 
 export interface Portfolio {
@@ -124,6 +125,7 @@ const getAssetDetails = async (workspaceId: string) => {
       ELSE a.asset_name 
     END AS name,
     a.asset_id AS id,
+    a.currency_code AS currencyCode,
     CAST(SUM(CASE 
       WHEN atype.asset_type_id IN (4, 5) THEN NULL
       ELSE at.shares
@@ -164,14 +166,14 @@ const getAssetDetails = async (workspaceId: string) => {
           ELSE at.current_price_per_share
         END
       ) AS currentSinglePriceKrw,
-    SUM(
-        CASE
-          WHEN atype.asset_type_id = 5 THEN NULL
-          WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
-          WHEN atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)
-          ELSE at.shares * at.current_price_per_share
-        END
-      ) AS totalEvaluationAmountKrw,
+    -- SUM(
+    --     CASE
+    --       WHEN atype.asset_type_id = 5 THEN NULL
+    --       WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
+    --       WHEN atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)
+    --       ELSE at.shares * at.current_price_per_share
+    --     END
+    --   ) AS totalEvaluationAmountKrw,
     -- 0 AS profitLossRateKrw,
     SUM(
         CASE
@@ -202,7 +204,7 @@ const getAssetDetails = async (workspaceId: string) => {
           ELSE NULL
         END
       ) AS currentSinglePriceForeign,
-    -- 0 AS totalEvaluationAmountForeign,
+    0 AS totalEvaluationAmountForeign,
     -- 0 AS profitLossRateForeign,
     SUM(
         CASE
@@ -210,6 +212,7 @@ const getAssetDetails = async (workspaceId: string) => {
           ELSE NULL
         END
       ) AS totalCurrentAmountForeign
+    
   FROM Asset a
   JOIN AssetToTransaction att ON a.asset_id = att.asset_id
   JOIN AssetTransaction at ON att.transaction_id = at.transaction_id
