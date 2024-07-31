@@ -27,6 +27,8 @@ export const getUser = async (req: Request, res: Response) => {
 };
 
 /// 유저 생성
+// TODO: 유저가 생성이 됐을때, 초대받은 유저라면 상태 변경처리?
+// TODO: 유저가 생성될때 동일한 workspace를 조회해서 있다면 해당 workspace의 유저들에게 푸시알림 노티 하기.
 export const createUser = async (req: Request, res: Response) => {
   const {
     workspace_id,

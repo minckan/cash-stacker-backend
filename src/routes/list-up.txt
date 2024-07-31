@@ -5,7 +5,7 @@
 : 초대 row를 생성하고 전달받은 이메일로 이메일을 보낸다
 - PUT /{workspace_id}/invite
 : 초대받은 유저가 우리 테이블에 등록이 완료되면 invitation의 status를 변경한다.
-- POST /{workspace_id}/invite/check
+- POST /invitation/verify
 : 딥링크로 메일을 통해 앱으로 진입했을때 초대가 유효한 유저인지 확인 (이메일, 워크스페이스 아이디로 식별)
 - DELETE /{workspace_id}/invite
 : 초대 삭제 (초대 후 5분)
