@@ -99,7 +99,7 @@ model AssetTransaction {
   transaction_id          Int                  @id @default(autoincrement())
   created_at              DateTime             @default(now())
   asset_id                Int
-  transaction_type        String
+  transaction_type        TransactionType
   description             String?
   transaction_date        DateTime
   exchange_rate           Float?
@@ -119,11 +119,17 @@ model AssetToTransaction {
   @@id([asset_id, transaction_id])
 }
 
+enum InvitationStatus {
+  WAITING
+  COMPLETED
+  FAILED
+}
+
 model Invitation {
-  id           String   @id @default(uuid())
+  id           String           @id @default(uuid())
   workspace_id String
   email        String
-  status       String
+  status       InvitationStatus
   token        String
   expiry_date  DateTime
 }

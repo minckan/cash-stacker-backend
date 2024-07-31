@@ -2,7 +2,7 @@ import prisma from "../../prisma/client";
 
 interface TransactionResponseType {
   transactionId: number;
-  transactionType: "sell" | "buy";
+  transactionType: "SELL" | "BUY";
   description?: string;
   transactionDate: Date;
   exchangeRate?: number;
@@ -75,7 +75,7 @@ export const getAllAssetsTransactions = async (
 
 const getTotal = (trs: TransactionResponseType[]) => {
   return trs.reduce((total, tr) => {
-    if (tr.transactionType === "buy") {
+    if (tr.transactionType === "BUY") {
       if (tr.assetTypeId === 4) {
         total += (tr.balance ?? 0) * (tr.exchangeRate ?? 1);
       } else if (tr.assetTypeId === 5) {

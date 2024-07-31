@@ -1,4 +1,6 @@
 get:
+  tags:
+    - portfolio
   summary: Get portfolio details
   description: Retrieve portfolio details based on the provided workspace ID
   parameters:

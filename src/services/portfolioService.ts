@@ -166,15 +166,6 @@ const getAssetDetails = async (workspaceId: string) => {
           ELSE at.current_price_per_share
         END
       ) AS currentSinglePriceKrw,
-    -- SUM(
-    --     CASE
-    --       WHEN atype.asset_type_id = 5 THEN NULL
-    --       WHEN atype.asset_type_id = 4 AND atype.is_foreign_asset_type = true THEN NULL
-    --       WHEN atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share * COALESCE(at.exchange_rate, 1)
-    --       ELSE at.shares * at.current_price_per_share
-    --     END
-    --   ) AS totalEvaluationAmountKrw,
-    -- 0 AS profitLossRateKrw,
     SUM(
         CASE
           WHEN atype.asset_type_id = 5 THEN NULL
@@ -198,14 +189,6 @@ const getAssetDetails = async (workspaceId: string) => {
           ELSE NULL
         END
       ) AS buyingSinglePriceForeign,
-    AVG(
-        CASE
-          WHEN atype.asset_type_id NOT IN (4, 5) AND atype.is_foreign_asset_type = true THEN at.current_price_per_share
-          ELSE NULL
-        END
-      ) AS currentSinglePriceForeign,
-    0 AS totalEvaluationAmountForeign,
-    -- 0 AS profitLossRateForeign,
     SUM(
         CASE
           WHEN atype.asset_type_id NOT IN (4, 5) AND atype.is_foreign_asset_type = true THEN at.shares * at.current_price_per_share
