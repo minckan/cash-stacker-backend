@@ -11,6 +11,7 @@ import financeTrackerCategoryRoutes from "./routes/financeTrackerCategoryRoutes"
 import budgetRoutes from "./routes/budgetRoutes";
 import invitationRoutes from "./routes/invitationRoutes";
 import portfolioRoutes from "./routes/portfolioRoutes";
+import invitationVerifyRoutes from "./routes/invitationVerifyRoutes";
 import winston from "winston";
 import expressWinston from "express-winston";
 import swaggerUi from "swagger-ui-express";
@@ -71,5 +72,7 @@ app.use("/:workspaceId/budget", budgetRoutes);
 app.use("/:workspaceId/invitation", invitationRoutes);
 // 포트폴리오
 app.use("/:workspaceId/portfolio", portfolioRoutes);
+// 초대 검증
+app.use("/invitation", invitationVerifyRoutes);
 
 export default app;

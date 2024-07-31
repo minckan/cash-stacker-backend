@@ -1,48 +1,20 @@
 import { Request, Response } from "express";
 import prisma from "../prisma/client";
+import { sendAndCreateInvitation } from "../services/invitationService/createInvitation";
+import { verifyInvitationToken } from "../utils/token";
 
 // 초대 생성
 export const createInvitation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["invitation"]
   const { workspaceId } = req.params;
-  const { email, status, token, expiry_date } = req.body;
+  const { email } = req.body;
   try {
-    const invitation = await prisma.invitation.create({
-      data: {
-        workspace_id: workspaceId,
-        email,
-        status,
-        token,
-        expiry_date: new Date(expiry_date),
-      },
-    });
+    const invitation = await sendAndCreateInvitation(workspaceId, email);
     res.status(201).json(invitation);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create invitation" });
-  }
-};
-
-// 초대 상태 업데이트
-export const updateInvitation = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  // #swagger.tags = ["invitation"]
-  const { id } = req.params;
-  const { status } = req.body;
-  try {
-    const invitation = await prisma.invitation.update({
-      where: { id },
-      data: {
-        status,
-      },
-    });
-    res.json(invitation);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to update invitation" });
+    res.status(500).json({ message: "Failed to create invitation", error });
   }
 };
 
@@ -51,7 +23,6 @@ export const deleteInvitation = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["invitation"]
   const { id } = req.params;
   try {
     await prisma.invitation.delete({
@@ -59,7 +30,7 @@ export const deleteInvitation = async (
     });
     res.status(204).end();
   } catch (error) {
-    res.status(500).json({ error: "Failed to delete invitation" });
+    res.status(500).json({ message: "Failed to delete invitation", error });
   }
 };
 
@@ -68,7 +39,6 @@ export const getAllInvitations = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // #swagger.tags = ["invitation"]
   const { workspaceId } = req.params;
   try {
     const invitations = await prisma.invitation.findMany({
@@ -76,6 +46,29 @@ export const getAllInvitations = async (
     });
     res.json(invitations);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch invitations" });
+    res.status(500).json({ message: "Failed to fetch invitations", error });
+  }
+};
+
+// 초대 토큰 검증
+export const verifyToken = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { token } = req.body;
+  try {
+    // 토큰 체크
+    const { isMatch, email, workspaceId } = await verifyInvitationToken(token);
+    if (!isMatch) {
+      res.status(400).send("invalid Or expired token");
+    }
+
+    res.status(200).send({
+      tokenMatched: true,
+      email,
+      workspaceId,
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to update invitation" });
   }
 };

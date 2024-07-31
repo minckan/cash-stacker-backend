@@ -153,8 +153,8 @@ AssetTransactionRequest:
     transaction_type:
       type: string
       enum:
-        - sell
-        - buy
+        - SELL
+        - BUY
     description:
       type: string
       nullable: true
@@ -416,8 +416,8 @@ AssetTransactionResponseType:
     transactionType:
       type: string
       enum:
-        - sell
-        - buy
+        - SELL
+        - BUY
     description:
       type: string
       nullable: true
@@ -454,3 +454,28 @@ AssetTransactionResponseType:
     assetId:
       type: number
       nullable: true
+
+InvitationTokenVerifyResponse:
+  type: object
+  properties:
+    workspaceId:
+      type: string
+    email:
+      type: string
+    tokenMatched:
+      type: boolean
+
+InvitationCreationResponse:
+  type: object
+  properties:
+    email:
+      type: string
+    status:
+      type: string
+      enum:
+        - WAITING
+        - COMPLETED
+        - FAILED
+    expiryAt:
+      type: string
+      format: date-time

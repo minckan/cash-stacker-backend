@@ -60,6 +60,8 @@ paths:
     $ref: "./paths/exchangeRate.yaml"
   /{workspaceId}/portfolio:
     $ref: "./paths/portfolio.yaml"
+  /invitation/verify:
+    $ref: "./paths/invitationVerify.yaml"
 
 components:
   parameters:

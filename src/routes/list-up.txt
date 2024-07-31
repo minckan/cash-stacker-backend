@@ -17,3 +17,6 @@
 <현재환율 조회후 계산해야 하는 것>
 totalCurrentAmountKrw - 해외 거래 원화환산 현재가 총 금액
 currentSinglePriceKrw - 해외 거래 원화환산 현재 단일가 
+
+
+32바이트 key 생성기 : openssl rand -base64 32
