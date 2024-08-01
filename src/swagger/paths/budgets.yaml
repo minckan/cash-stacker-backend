@@ -2,6 +2,7 @@ get:
   tags:
     - budget
   summary: Get all budgets
+  operationId: "getAllBudgets"
   description: Retrieve all active budgets for the specified workspace.
   security:
     - bearerAuth: []
@@ -28,6 +29,7 @@ post:
   tags:
     - budget
   summary: Create a new budget
+  operationId: "createBudget"
   description: Create a new budget for the specified workspace.
   security:
     - bearerAuth: []
@@ -43,23 +45,8 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            start_date:
-              type: string
-              format: date-time
-              description: The start date of the budget
-            end_date:
-              type: string
-              format: date-time
-              description: The end date of the budget
-            amount:
-              type: number
-              format: float
-              description: The amount of the budget
-            isActive:
-              type: boolean
-              description: Whether the budget is active
+          $ref: "../openapi.yaml#/components/schemas/CreateBudgetReq"
+
   responses:
     201:
       description: Budget created successfully.

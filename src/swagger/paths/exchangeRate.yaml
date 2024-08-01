@@ -2,6 +2,7 @@ get:
   tags:
     - exchange-rate
   summary: Fetch exchange rates
+  operationId: "getExchangeRate"
   description: Retrieve the latest exchange rates.
   responses:
     200:

@@ -2,6 +2,7 @@ get:
   tags:
     - financial category
   summary: Get financial categories by type
+  operationId: "getFinancialCategoryById"
   description: Retrieve all financial categories of a specified type for the specified workspace.
   security:
     - bearerAuth: []

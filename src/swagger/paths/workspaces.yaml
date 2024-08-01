@@ -2,6 +2,7 @@ post:
   tags:
     - workspace
   summary: Create a new workspace
+  operationId: "createWorkspace"
   description: Create a new workspace with the provided information.
   security:
     - bearerAuth: []
@@ -10,25 +11,14 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            workspace_name:
-              type: string
-              description: The name of the workspace.
-            workspace_id:
-              type: string
-              description: The ID of the workspace.
+          $ref: "../openapi.yaml#/components/schemas/CreateWorkspaceReq"
   responses:
     201:
       description: Workspace created successfully.
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              workspace_id:
-                type: string
-                description: The ID of the newly created workspace.
+            $ref: "../openapi.yaml#/components/schemas/CreateWorkspaceRes"
     400:
       description: Workspace ID is required.
     500:
@@ -38,6 +28,7 @@ get:
   tags:
     - workspace
   summary: Get all workspaces
+  operationId: "getAllWorkspace"
   description: Retrieve all workspaces.
   security:
     - bearerAuth: []

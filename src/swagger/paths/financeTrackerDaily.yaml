@@ -2,6 +2,7 @@ get:
   tags:
     - financial tracker
   summary: Get daily transactions
+  operationId: "getDailyTransactions"
   description: Retrieve all financial transactions for the specified date.
   security:
     - bearerAuth: []

@@ -2,6 +2,7 @@ put:
   tags:
     - financial tracker
   summary: Update a transaction
+  operationId: "updateFinancialTrackerTransaction"
   description: Update an existing financial transaction by its ID.
   security:
     - bearerAuth: []
@@ -23,20 +24,7 @@ put:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            category_id:
-              type: integer
-            amount:
-              type: number
-              format: float
-            transaction_type:
-              type: string
-            description:
-              type: string
-            transaction_date:
-              type: string
-              format: date-time
+          $ref: "../openapi.yaml#/components/schemas/UpdateFinancialTrackerTransactionReq"
   responses:
     200:
       description: Transaction updated successfully.
@@ -51,6 +39,7 @@ delete:
   tags:
     - financial tracker
   summary: Delete a transaction
+  operationId: "deleteFinancialTrackerTransaction"
   description: Delete an existing financial transaction by its ID.
   security:
     - bearerAuth: []

@@ -41,3 +41,14 @@ InternalServerError:
           message:
             type: string
             example: Internal server error
+
+DeletedSuccessfully:
+  description: Successfully deleted.
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          result:
+            type: string
+            example: "deleted successfully"

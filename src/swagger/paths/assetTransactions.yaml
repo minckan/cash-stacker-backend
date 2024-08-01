@@ -2,6 +2,7 @@ post:
   tags:
     - asset
   summary: Create a new asset transaction
+  operationId: "createAssetTransaction"
   description: Create a new asset transaction for the specified asset
   security:
     - bearerAuth: []

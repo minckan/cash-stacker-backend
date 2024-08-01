@@ -2,6 +2,7 @@ get:
   tags:
     - asset type
   summary: Get all asset types
+  operationId: "getAllAssetTypes"
   description: Retrieve all asset types for the specified workspace.
   security:
     - bearerAuth: []
@@ -28,6 +29,7 @@ post:
   tags:
     - asset type
   summary: Create a new asset type
+  operationId: "createAssetType"
   description: Create a new asset type for the specified workspace.
   security:
     - bearerAuth: []
@@ -43,14 +45,7 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            asset_type_name:
-              type: string
-              description: The name of the asset type
-            is_foreign_asset_type:
-              type: boolean
-              description: 해외 자산 여부
+          $ref: "../openapi.yaml#/components/schemas/CreateAssetTypeReq"
   responses:
     201:
       description: Asset type created successfully.

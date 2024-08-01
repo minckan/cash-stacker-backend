@@ -2,6 +2,7 @@ post:
   tags:
     - asset
   summary: Create a new asset
+  operationId: createNewAsset
   description: Create a new asset for the specified workspace.
   security:
     - bearerAuth: []
@@ -11,24 +12,13 @@ post:
       required: true
       schema:
         type: string
-      description: The ID of the workspace
+        description: The ID of the workspace
   requestBody:
     required: true
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            asset_type_id:
-              type: integer
-            asset_name:
-              type: string
-              nullable: true
-            currency_code:
-              type: string
-            transactions:
-              $ref: "../openapi.yaml#/components/schemas/AssetTransactionRequest"
-              nullable: true
+          $ref: "../openapi.yaml#/components/schemas/CreateAssetReq"
 
   responses:
     201:

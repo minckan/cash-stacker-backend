@@ -1,7 +1,8 @@
 post:
   tags:
     - invitation verify
-  summary: verify invitation
+  summary: verify invitation token
+  operationId: "verifyInvitationToken"
   description: verify invitation with token.
   security:
     - bearerAuth: []
@@ -10,18 +11,14 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            token:
-              type: string
-              description: The invitation token
+          $ref: "../openapi.yaml#/components/schemas/VerifyInvitationTokenReq"
 
   responses:
     200:
-      description: Invitation created successfully.
+      description: Invitation token verified successfully.
       content:
         application/json:
           schema:
             $ref: "../openapi.yaml#/components/schemas/InvitationTokenVerifyResponse"
     500:
-      description: Failed to create invitation.
+      description: Failed to verify invitation.

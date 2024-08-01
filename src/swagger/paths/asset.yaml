@@ -2,6 +2,7 @@ get:
   tags:
     - asset
   summary: asset ID로 자산 조회
+  operationId: "getAssetById"
   description: Retrieve a specific asset by its ID.
   security:
     - bearerAuth: []
@@ -32,6 +33,7 @@ put:
   tags:
     - asset
   summary: 자산 데이터 수정
+  operationId: "updateAsset"
   description: Update the name of a specific asset by its ID.
   security:
     - bearerAuth: []
@@ -53,10 +55,7 @@ put:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            asset_name:
-              type: string
+          $ref: "../openapi.yaml#/components/schemas/UpdateAssetReq"
   responses:
     201:
       description: Asset updated successfully.
@@ -71,6 +70,7 @@ delete:
   tags:
     - asset
   summary: Delete an asset by ID
+  operationId: "deleteAsset"
   description: Delete a specific asset by its ID.
   security:
     - bearerAuth: []

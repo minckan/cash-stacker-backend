@@ -2,6 +2,7 @@ get:
   tags:
     - portfolio
   summary: Get portfolio details
+  operationId: "getPortfolioDetails"
   description: Retrieve portfolio details based on the provided workspace ID
   parameters:
     - in: path

@@ -2,6 +2,7 @@ get:
   tags:
     - financial tracker
   summary: Get monthly transactions
+  operationId: "getMonthlyTransactions"
   description: Retrieve all financial transactions for the specified month.
   security:
     - bearerAuth: []
@@ -24,20 +25,6 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              netTotal:
-                type: number
-                description: Total amount of transactions
-              expense:
-                type: number
-                description: Total expense amount
-              income:
-                type: number
-                description: Total income amount
-              transactions:
-                type: array
-                items:
-                  $ref: "../openapi.yaml#/components/schemas/Transaction"
+            $ref: "../openapi.yaml#/components/schemas/GetMonthlyFinancialTransactionRes"
     500:
       description: Failed to fetch monthly transactions.

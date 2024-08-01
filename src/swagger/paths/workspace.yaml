@@ -2,6 +2,7 @@ get:
   tags:
     - workspace
   summary: Get a workspace by ID
+  operationId: "getWorkspaceById"
   description: Retrieve a specific workspace by its ID.
   security:
     - bearerAuth: []

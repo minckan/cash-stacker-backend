@@ -2,6 +2,7 @@ get:
   tags:
     - asset
   summary: Get monthly asset trend
+  operationId: "getMonthlyAssetTrend"
   description: Retrieve the monthly trend of assets for the specified workspace.
   security:
     - bearerAuth: []

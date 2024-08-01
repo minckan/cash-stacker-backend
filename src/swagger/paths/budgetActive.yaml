@@ -2,6 +2,7 @@ get:
   tags:
     - budget
   summary: Get active budgets
+  operationId: "getActiveBudget"
   description: Retrieve all budgets for the specified workspace.
   security:
     - bearerAuth: []
@@ -18,20 +19,6 @@ get:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              budget:
-                $ref: "../openapi.yaml#/components/schemas/Budget"
-                nullable: true
-              expendableBudget:
-                type: object
-                properties:
-                  expendableBudget:
-                    type: number
-                    example: 500.0
-                  percentage:
-                    type: number
-                    example: 50.0
-                nullable: true
+            $ref: "../openapi.yaml#/components/schemas/GetActiveBudgetRes"
     500:
       description: Failed to fetch budgets.

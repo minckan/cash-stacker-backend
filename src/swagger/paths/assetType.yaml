@@ -2,6 +2,7 @@ put:
   tags:
     - asset type
   summary: Update an asset type
+  operationId: "updateAssetType"
   description: Update an existing asset type by its ID.
   security:
     - bearerAuth: []
@@ -23,13 +24,7 @@ put:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            asset_type_name:
-              type: string
-              description: The name of the asset type
-            is_foreign_asset_type:
-              type: boolean
+          $ref: "../openapi.yaml#/components/schemas/UpdateAssetTypeReq"
   responses:
     200:
       description: Asset type updated successfully.
@@ -44,6 +39,7 @@ delete:
   tags:
     - asset type
   summary: Delete an asset type
+  operationId: "deleteAssetType"
   description: Delete an existing asset type by its ID.
   security:
     - bearerAuth: []

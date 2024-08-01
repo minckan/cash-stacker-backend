@@ -2,6 +2,7 @@ get:
   tags:
     - asset
   summary: Get all asset transactions
+  operationId: "getAllAssetsTransaction"
   description: Retrieve all assets for the specified workspace.
   security:
     - bearerAuth: []

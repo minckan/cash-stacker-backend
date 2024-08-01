@@ -2,6 +2,7 @@ put:
   tags:
     - asset
   summary: update asset transaction by ID
+  operationId: "updateAssetTransactionById"
   description: update specific asset transaction by its ID.
   security:
     - bearerAuth: []
@@ -29,23 +30,7 @@ put:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            amount:
-              type: number
-            transaction_type:
-              type: string
-            description:
-              type: string
-            transaction_date:
-              type: string
-              format: date-time
-            exchange_rate:
-              type: number
-            shares:
-              type: number
-            price_per_share:
-              type: number
+          $ref: "../openapi.yaml#/components/schemas/UpdateAssetTransactionByIdReq"
   responses:
     200:
       description: An asset transaction object.
@@ -60,6 +45,7 @@ delete:
   tags:
     - asset
   summary: Delete an asset transaction by ID
+  operationId: "deleteAssetTransaction"
   description: Delete a specific asset transaction by its ID.
   security:
     - bearerAuth: []
@@ -84,22 +70,6 @@ delete:
       description: The ID of the asset transaction
   responses:
     201:
-      description: Successfully deleted the asset transaction.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              result:
-                type: string
-                example: "deleted successfully"
+      $ref: "../openapi.yaml#/components/responses/DeletedSuccessfully"
     500:
-      description: Failed to delete asset transaction.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                type: string
-                example: "Failed to delete asset transaction"
+      $ref: "../openapi.yaml#/components/responses/InternalServerError"

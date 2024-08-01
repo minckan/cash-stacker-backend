@@ -479,3 +479,264 @@ InvitationCreationResponse:
     expiryAt:
       type: string
       format: date-time
+
+CreateUserRequest:
+  type: object
+  properties:
+    workspace_id:
+      type: string
+      description: The ID of the workspace.
+    username:
+      type: string
+      description: The username of the user.
+    email:
+      type: string
+      description: The email of the user.
+    login_type:
+      type: string
+      description: The login type of the user.
+    role:
+      type: string
+      description: The role of the user.
+    push_enable:
+      type: boolean
+      description: Whether push notifications are enabled.
+    darkMode_enable:
+      type: boolean
+      description: Whether dark mode is enabled.
+    profile_image:
+      type: string
+      description: The profile image of the user.
+    push_id:
+      type: string
+      description: The push ID of the user.
+    joined_at:
+      type: string
+      format: date-time
+      description: The date the user joined.
+    created_at:
+      type: string
+      format: date-time
+      description: The date the user was created.
+    user_id:
+      type: string
+      description: The ID of the user.
+    platform_type:
+      type: string
+      description: The platform type of the user.
+
+CreateUserResponse:
+  type: object
+  properties:
+    user_id:
+      type: string
+      description: The ID of the newly created user.
+
+UpdateUserRequest:
+  type: object
+  properties:
+    push_enable:
+      type: boolean
+      description: Whether push notifications are enabled.
+    darkMode_enable:
+      type: boolean
+      description: Whether dark mode is enabled.
+    role:
+      type: string
+      description: The role of the user.
+
+CreateWorkspaceReq:
+  type: object
+  properties:
+    workspace_name:
+      type: string
+      description: The name of the workspace.
+    workspace_id:
+      type: string
+      description: The ID of the workspace.
+
+CreateWorkspaceRes:
+  type: object
+  properties:
+    workspace_id:
+      type: string
+      description: The ID of the newly created workspace.
+
+CreateAssetReq:
+  type: object
+  properties:
+    asset_type_id:
+      type: integer
+    asset_name:
+      type: string
+      nullable: true
+    currency_code:
+      type: string
+    transactions:
+      $ref: "../openapi.yaml#/components/schemas/AssetTransactionRequest"
+      nullable: true
+
+UpdateAssetReq:
+  type: object
+  properties:
+    asset_name:
+      type: string
+
+UpdateAssetTransactionByIdReq:
+  type: object
+  properties:
+    amount:
+      type: number
+    transaction_type:
+      type: string
+    description:
+      type: string
+    transaction_date:
+      type: string
+      format: date-time
+    exchange_rate:
+      type: number
+    shares:
+      type: number
+    price_per_share:
+      type: number
+
+GetMonthlyFinancialTransactionRes:
+  type: object
+  properties:
+    netTotal:
+      type: number
+      description: Total amount of transactions
+    expense:
+      type: number
+      description: Total expense amount
+    income:
+      type: number
+      description: Total income amount
+    transactions:
+      type: array
+      items:
+        $ref: "../openapi.yaml#/components/schemas/Transaction"
+
+CreateFinancialTrackerTransactionReq:
+  type: object
+  properties:
+    category_id:
+      type: integer
+    amount:
+      type: number
+      format: float
+    transaction_type:
+      type: string
+    description:
+      type: string
+    transaction_date:
+      type: string
+      format: date-time
+    payment_method:
+      type: string
+
+UpdateFinancialTrackerTransactionReq:
+  type: object
+  properties:
+    category_id:
+      type: integer
+    amount:
+      type: number
+      format: float
+    transaction_type:
+      type: string
+    description:
+      type: string
+    transaction_date:
+      type: string
+      format: date-time
+
+CreateAssetTypeReq:
+  type: object
+  properties:
+    asset_type_name:
+      type: string
+      description: The name of the asset type
+    is_foreign_asset_type:
+      type: boolean
+      description: 해외 자산 여부
+
+UpdateAssetTypeReq:
+  type: object
+  properties:
+    asset_type_name:
+      type: string
+      description: The name of the asset type
+    is_foreign_asset_type:
+      type: boolean
+
+CreateFinancialTrackerCategoryReq:
+  type: object
+  properties:
+    category_name:
+      type: string
+      description: The name of the category
+    category_type:
+      type: string
+      description: The type of the category (income or expense)
+
+UpdateFinancialTrackerCategoryReq:
+  type: object
+  properties:
+    category_name:
+      type: string
+      description: The name of the category
+
+CreateBudgetReq:
+  type: object
+  properties:
+    start_date:
+      type: string
+      format: date-time
+      description: The start date of the budget
+    end_date:
+      type: string
+      format: date-time
+      description: The end date of the budget
+    amount:
+      type: number
+      format: float
+      description: The amount of the budget
+    isActive:
+      type: boolean
+      description: Whether the budget is active
+
+GetActiveBudgetRes:
+  type: object
+  properties:
+    budget:
+      $ref: "../openapi.yaml#/components/schemas/Budget"
+      nullable: true
+    expendableBudget:
+      $ref: "../openapi.yaml#/components/schemas/ExpendableBudget"
+      nullable: true
+
+CreateInvitationReq:
+  type: object
+  properties:
+    email:
+      type: string
+      description: The email address to send the invitation to
+
+VerifyInvitationTokenReq:
+  type: object
+  properties:
+    token:
+      type: string
+      description: The invitation token
+
+ExpendableBudget:
+  type: object
+  properties:
+    expendableBudget:
+      type: number
+      example: 500.0
+    percentage:
+      type: number
+      example: 50.0

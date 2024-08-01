@@ -42,6 +42,7 @@ delete:
   tags:
     - invitation
   summary: Delete an invitation
+  operationId: "deleteInvitation"
   description: Delete an existing invitation by its ID.
   parameters:
     - name: workspaceId

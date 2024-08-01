@@ -2,6 +2,7 @@ get:
   tags:
     - invitation
   summary: Get all invitations
+  operationId: "getAllInvitations"
   description: Retrieve all invitations sent from the specified workspace.
   security:
     - bearerAuth: []
@@ -28,6 +29,7 @@ post:
   tags:
     - invitation
   summary: Create a new invitation
+  operationId: "createInvitation"
   description: Create a new invitation for the specified workspace.
   security:
     - bearerAuth: []
@@ -43,11 +45,7 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            email:
-              type: string
-              description: The email address to send the invitation to
+          $ref: "../openapi.yaml#/components/schemas/CreateInvitationReq"
 
   responses:
     201:

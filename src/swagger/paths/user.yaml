@@ -2,6 +2,7 @@ get:
   tags:
     - user
   summary: Retrieve a user by ID
+  operationId: "getUser"
   description: Retrieve a user by their user ID.
   parameters:
     - name: id
@@ -26,6 +27,7 @@ put:
   tags:
     - user
   summary: Update user status
+  operationId: "updateUserStatus"
   description: Update the status of a user by their user ID.
   parameters:
     - name: id
@@ -39,17 +41,7 @@ put:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            push_enable:
-              type: boolean
-              description: Whether push notifications are enabled.
-            darkMode_enable:
-              type: boolean
-              description: Whether dark mode is enabled.
-            role:
-              type: string
-              description: The role of the user.
+          $ref: "../openapi.yaml#/components/schemas/UpdateUserRequest"
   responses:
     201:
       description: User status updated successfully.

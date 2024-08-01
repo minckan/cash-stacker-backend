@@ -2,6 +2,7 @@ put:
   tags:
     - budget
   summary: Update a budget
+  operationId: "updateBudget"
   description: Update an existing budget by its ID.
   security:
     - bearerAuth: []
@@ -54,6 +55,7 @@ delete:
   tags:
     - budget
   summary: Delete a budget
+  operationId: "deleteBudget"
   description: Delete an existing budget by its ID.
   security:
     - bearerAuth: []

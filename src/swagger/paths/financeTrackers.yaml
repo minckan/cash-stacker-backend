@@ -2,6 +2,7 @@ post:
   tags:
     - financial tracker
   summary: Create a new transaction
+  operationId: "createTransaction"
   description: Create a new financial transaction for the specified workspace.
   security:
     - bearerAuth: []
@@ -17,22 +18,7 @@ post:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            category_id:
-              type: integer
-            amount:
-              type: number
-              format: float
-            transaction_type:
-              type: string
-            description:
-              type: string
-            transaction_date:
-              type: string
-              format: date-time
-            payment_method:
-              type: string
+          $ref: "../openapi.yaml#/components/schemas/CreateFinancialTrackerTransactionReq"
   responses:
     201:
       description: Transaction created successfully.

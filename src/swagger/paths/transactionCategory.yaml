@@ -2,6 +2,7 @@ put:
   tags:
     - financial category
   summary: Update a financial category
+  operationId: "updateFinancialCategory"
   description: Update an existing financial category by its ID.
   security:
     - bearerAuth: []
@@ -23,11 +24,8 @@ put:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            category_name:
-              type: string
-              description: The name of the category
+          $ref: "../openapi.yaml#/components/schemas/UpdateFinancialTrackerCategoryReq"
+
   responses:
     200:
       description: Category updated successfully.
@@ -42,6 +40,7 @@ delete:
   tags:
     - financial category
   summary: Delete a financial category
+  operationId: "deleteFinancialCategory"
   description: Delete an existing financial category by its ID.
   security:
     - bearerAuth: []
