@@ -25,6 +25,9 @@ app.use(express.json());
 const swaggerSpec = YAML.load(path.join(__dirname, "../build/swagger.yaml"));
 
 app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get("/swagger.yaml", (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/swagger.yaml"));
+});
 
 // 요청과 응답을 로그로 남기는 미들웨어 설정
 app.use(
